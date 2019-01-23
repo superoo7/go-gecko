@@ -1,10 +1,11 @@
-package coingecko
+package main
 
 import (
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
 	"net/http"
+	"strings"
 
 	"github.com/superoo7/go-gecko/v3/types"
 )
@@ -26,6 +27,26 @@ func Ping() (*types.Ping, error) {
 	return data, nil
 }
 
+// SimpleSinglePrice /simple/price (id, vs_currency)
+func SimpleSinglePrice(cId string, vC string) (*types.SimpleSinglePrice, error) {
+	cId = strings.ToLower(cId)
+	vC = strings.ToLower(vC)
+	params := []string{fmt.Sprintf("ids=%s", cId), fmt.Sprintf("vs_currencies=%s", vC)}
+	url := fmt.Sprintf("%s/simple/price?%s", baseURL, strings.Join(params, "&"))
+	resp, err := makeReq(url)
+	if err != nil {
+		return nil, err
+	}
+	t := make(map[string]map[string]float32)
+	err = json.Unmarshal(resp, &t)
+	if err != nil {
+		return nil, err
+	}
+	c := t[cId]
+	data := &types.SimpleSinglePrice{ID: cId, Currency: vC, MarketPrice: c[vC]}
+	return data, nil
+}
+
 // helper
 // doReq HTTP client
 func doReq(req *http.Request) ([]byte, error) {
@@ -42,7 +63,6 @@ func doReq(req *http.Request) ([]byte, error) {
 	if 200 != resp.StatusCode {
 		return nil, fmt.Errorf("%s", body)
 	}
-
 	return body, nil
 }
 
@@ -56,6 +76,5 @@ func makeReq(url string) ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
-
 	return resp, err
 }
