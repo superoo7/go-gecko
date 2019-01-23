@@ -7,4 +7,4 @@ go:
   - master
 
 script:
-  - go test -v v3/*.go
+  - go test -v v3/v3.go v3/v3_test.go
