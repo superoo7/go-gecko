@@ -1,4 +1,4 @@
-package coingecko
+package main
 
 import (
 	"encoding/json"
@@ -27,12 +27,24 @@ func Ping() (*types.Ping, error) {
 	return data, nil
 }
 
-// SimplePrice /simple/price
-func SimplePrice(cId []string, vC string) (*types.SimplePrice, error) {
-	joinIds := strings.Join(cId, ",")
-	params := [2]string{fmt.Sprintf("ids=%s", joinIds), fmt.Sprintf("vs_currency=%s", vC)}
-
-	return nil, nil
+// SimpleSinglePrice /simple/price (id, vs_currency)
+func SimpleSinglePrice(cId string, vC string) (*types.SimpleSinglePrice, error) {
+	cId = strings.ToLower(cId)
+	vC = strings.ToLower(vC)
+	params := []string{fmt.Sprintf("ids=%s", cId), fmt.Sprintf("vs_currencies=%s", vC)}
+	url := fmt.Sprintf("%s/simple/price?%s", baseURL, strings.Join(params, "&"))
+	resp, err := makeReq(url)
+	if err != nil {
+		return nil, err
+	}
+	t := make(map[string]map[string]float32)
+	err = json.Unmarshal(resp, &t)
+	if err != nil {
+		return nil, err
+	}
+	c := t[cId]
+	data := &types.SimpleSinglePrice{ID: cId, Currency: vC, MarketPrice: c[vC]}
+	return data, nil
 }
 
 // helper
@@ -51,7 +63,6 @@ func doReq(req *http.Request) ([]byte, error) {
 	if 200 != resp.StatusCode {
 		return nil, fmt.Errorf("%s", body)
 	}
-
 	return body, nil
 }
 
@@ -65,6 +76,5 @@ func makeReq(url string) ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
-
 	return resp, err
 }
