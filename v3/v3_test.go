@@ -15,3 +15,11 @@ func TestPing(t *testing.T) {
 		t.FailNow()
 	}
 }
+
+func TestSimpleSinglePrice(t *testing.T) {
+	price, err := SimpleSinglePrice("bitcoin", "usd")
+
+	if err != nil {
+		t.FailNow()
+	}
+}
