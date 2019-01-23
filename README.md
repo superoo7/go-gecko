@@ -1,6 +1,6 @@
 # CoinGecko API Client for GoLang
 
-WIP
+Simple API Client for GoLang
 
 ## References & Credits
 

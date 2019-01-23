@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
+	"strings"
 
 	"github.com/superoo7/go-gecko/v3/types"
 )
@@ -24,6 +25,14 @@ func Ping() (*types.Ping, error) {
 		return nil, err
 	}
 	return data, nil
+}
+
+// SimplePrice /simple/price
+func SimplePrice(cId []string, vC string) (*types.SimplePrice, error) {
+	joinIds := strings.Join(cId, ",")
+	params := [2]string{fmt.Sprintf("ids=%s", joinIds), fmt.Sprintf("vs_currency=%s", vC)}
+
+	return nil, nil
 }
 
 // helper
