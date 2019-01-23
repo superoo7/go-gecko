@@ -7,7 +7,7 @@ import (
 	gecko "github.com/superoo7/go-gecko/v3"
 )
 
-func mainPing() {
+func main() {
 	ping, err := gecko.Ping()
 	if err != nil {
 		log.Fatal(err)

@@ -12,5 +12,5 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	fmt.Println(price)
+	fmt.Println(fmt.Sprintf("%s is worth %f %s", price.ID, price.MarketPrice, price.Currency))
 }
