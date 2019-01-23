@@ -1,4 +1,4 @@
-package main
+package coingecko
 
 import (
 	"encoding/json"
@@ -7,7 +7,7 @@ import (
 	"net/http"
 	"strings"
 
-	"github.com/superoo7/go-gecko/v3/types"
+	types "github.com/superoo7/go-gecko/v3/types"
 )
 
 var baseURL = "https://api.coingecko.com/api/v3"

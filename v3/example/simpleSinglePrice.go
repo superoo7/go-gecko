@@ -7,10 +7,10 @@ import (
 	gecko "github.com/superoo7/go-gecko/v3"
 )
 
-func mainPing() {
-	ping, err := gecko.Ping()
+func main() {
+	price, err := gecko.SimpleSinglePrice("bitcoin", "usd")
 	if err != nil {
 		log.Fatal(err)
 	}
-	fmt.Println(ping.GeckoSays)
+	fmt.Println(price)
 }
