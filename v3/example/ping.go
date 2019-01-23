@@ -9,7 +9,7 @@ import (
 
 func main() {
 	ping, err := gecko.Ping()
-	if err != null {
+	if err != nil {
 		log.Fatal(err)
 	}
 	fmt.Println(ping.GeckoSays)

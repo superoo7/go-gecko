@@ -14,7 +14,6 @@ var baseURL = "https://api.coingecko.com/api/v3"
 // Ping /ping endpoint
 func Ping() (*types.Ping, error) {
 	url := fmt.Sprintf("%s/ping", baseURL)
-	fmt.Println(url)
 	resp, err := makeReq(url)
 	if err != nil {
 		return nil, err
