@@ -7,7 +7,7 @@ import (
 	"net/http"
 	"strings"
 
-	types "github.com/superoo7/go-gecko/v3/types"
+	types "github.com/superoo7/go-gecko/src/v3/types"
 )
 
 var baseURL = "https://api.coingecko.com/api/v3"
@@ -28,10 +28,10 @@ func Ping() (*types.Ping, error) {
 }
 
 // SimpleSinglePrice /simple/price (id, vs_currency)
-func SimpleSinglePrice(cId string, vC string) (*types.SimpleSinglePrice, error) {
-	cId = strings.ToLower(cId)
+func SimpleSinglePrice(cID string, vC string) (*types.SimpleSinglePrice, error) {
+	cID = strings.ToLower(cID)
 	vC = strings.ToLower(vC)
-	params := []string{fmt.Sprintf("ids=%s", cId), fmt.Sprintf("vs_currencies=%s", vC)}
+	params := []string{fmt.Sprintf("ids=%s", cID), fmt.Sprintf("vs_currencies=%s", vC)}
 	url := fmt.Sprintf("%s/simple/price?%s", baseURL, strings.Join(params, "&"))
 	resp, err := makeReq(url)
 	if err != nil {
@@ -42,8 +42,8 @@ func SimpleSinglePrice(cId string, vC string) (*types.SimpleSinglePrice, error) 
 	if err != nil {
 		return nil, err
 	}
-	c := t[cId]
-	data := &types.SimpleSinglePrice{ID: cId, Currency: vC, MarketPrice: c[vC]}
+	c := t[cID]
+	data := &types.SimpleSinglePrice{ID: cID, Currency: vC, MarketPrice: c[vC]}
 	return data, nil
 }
 
