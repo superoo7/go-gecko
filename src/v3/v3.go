@@ -45,3 +45,15 @@ func SimpleSinglePrice(cID string, vC string) (*types.SimpleSinglePrice, error) 
 	data := &types.SimpleSinglePrice{ID: cID, Currency: vC, MarketPrice: c[vC]}
 	return data, nil
 }
+
+// SimpleSupportedVSCurrencies /simple/supported_vs_currencies
+func SimpleSupportedVSCurrencies() (*types.SimpleSupportedVSCurrencies, error) {
+	url := fmt.Sprintf("%s/simple/supported_vs_currencies", baseURL)
+	resp, err := helper.MakeReq(url)
+	if err != nil {
+		return nil, err
+	}
+	var data *types.SimpleSupportedVSCurrencies
+	err = json.Unmarshal(resp, &data)
+	return data, nil
+}

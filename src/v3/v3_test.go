@@ -20,3 +20,10 @@ func TestSimpleSinglePrice(t *testing.T) {
 		t.FailNow()
 	}
 }
+
+func TestSimpleSupportedVSCurrencies(t *testing.T) {
+	_, err := SimpleSupportedVSCurrencies()
+	if err != nil {
+		t.FailNow()
+	}
+}

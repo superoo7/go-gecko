@@ -11,3 +11,6 @@ type SimpleSinglePrice struct {
 	Currency    string
 	MarketPrice float32
 }
+
+// SimpleSupportedVSCurrencies https://api.coingecko.com/api/v3/simple/supported_vs_currencies
+type SimpleSupportedVSCurrencies []string
