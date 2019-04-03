@@ -18,6 +18,11 @@ type SimpleSupportedVSCurrencies []string
 // CoinList https://api.coingecko.com/api/v3/coins/list
 type CoinList []CoinsListItem
 
+// EventsCountries https://api.coingecko.com/api/v3/events/countries
+type EventsCountries struct {
+	Data []EventCountryItem `json:"data"`
+}
+
 // EventsTypes https://api.coingecko.com/api/v3/events/types
 type EventsTypes struct {
 	Data  []string `json:"data"`

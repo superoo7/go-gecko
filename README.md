@@ -14,6 +14,7 @@ Simple API Client for CoinGecko written in Golang
 |          /simple/price          | partial |      SimpleSinglePrice      |
 | /simple/supported_vs_currencies |   [/]   | SimpleSupportedVSCurrencies |
 |           /coins/list           |   [/]   |          CoinsList          |
+|        /events/countries        |   [/]   |       EventsCountries       |
 |          /events/types          |   [/]   |         EventsType          |
 |         /exchange_rates         |   [/]   |        ExchangeRate         |
 |             /global             |   [/]   |           Global            |

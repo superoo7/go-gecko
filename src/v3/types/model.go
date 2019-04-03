@@ -10,6 +10,12 @@ type CoinsListItem struct {
 	Name   string `json:"name"`
 }
 
+// EventCountryItem item in EventsCountries
+type EventCountryItem struct {
+	Country string `json:"country"`
+	Code    string `json:"code"`
+}
+
 // ExchangeRatesItem item in ExchangeRate
 type ExchangeRatesItem map[string]ExchangeRatesItemStruct
 
