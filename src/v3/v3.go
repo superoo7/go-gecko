@@ -67,7 +67,25 @@ func CoinsList() (*types.CoinList, error) {
 	}
 	var data *types.CoinList
 	err = json.Unmarshal(resp, &data)
+	if err != nil {
+		return nil, err
+	}
 	return data, nil
+}
+
+// ExchangeRates https://api.coingecko.com/api/v3/exchange_rates
+func ExchangeRates() (*types.ExchangeRatesItem, error) {
+	url := fmt.Sprintf("%s/exchange_rates", baseURL)
+	resp, err := helper.MakeReq(url)
+	if err != nil {
+		return nil, err
+	}
+	var data *types.ExchangeRatesResponse
+	err = json.Unmarshal(resp, &data)
+	if err != nil {
+		return nil, err
+	}
+	return &data.Rates, nil
 }
 
 // Global https://api.coingecko.com/api/v3/global

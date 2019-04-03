@@ -15,6 +15,11 @@ type SimpleSinglePrice struct {
 // SimpleSupportedVSCurrencies https://api.coingecko.com/api/v3/simple/supported_vs_currencies
 type SimpleSupportedVSCurrencies []string
 
+// ExchangeRatesResponse https://api.coingecko.com/api/v3/exchange_rates
+type ExchangeRatesResponse struct {
+	Rates ExchangeRatesItem `json:"rates"`
+}
+
 // GlobalResponse https://api.coingecko.com/api/v3/global
 type GlobalResponse struct {
 	Data Global `json:"data"`

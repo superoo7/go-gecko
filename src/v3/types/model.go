@@ -10,6 +10,17 @@ type CoinsListItem struct {
 	Name   string `json:"name"`
 }
 
+// ExchangeRatesItem item in ExchangeRate
+type ExchangeRatesItem map[string]ExchangeRatesItemStruct
+
+// ExchangeRatesItemStruct struct in ExchangeRateItem
+type ExchangeRatesItemStruct struct {
+	Name  string  `json:"name"`
+	Unit  string  `json:"unit"`
+	Value float64 `json:"value"`
+	Type  string  `json:"type"`
+}
+
 // Global for data of /global
 type Global struct {
 	ActiveCryptocurrencies          uint16        `json:"active_cryptocurrencies"`
