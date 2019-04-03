@@ -16,3 +16,13 @@ Simple API Client for CoinGecko written in Golang
 |           /coins/list           |   [/]   |          CoinsList          |
 |         /exchange_rates         |   [/]   |        ExchangeRate         |
 |             /global             |   [/]   |           Global            |
+
+## Usage
+
+Installation with go get.
+
+```
+go get -u github.com/superoo7/go-gecko
+```
+
+For usage, checkout [Example folder for v3](/_example/v3)
