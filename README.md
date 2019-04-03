@@ -13,4 +13,5 @@ Simple API Client for CoinGecko written in Golang
 |              /ping              |   [/]   |            Ping             |
 |          /simple/price          | partial |      SimpleSinglePrice      |
 | /simple/supported_vs_currencies |   [/]   | SimpleSupportedVSCurrencies |
+|           /coins/list           |   [/]   |          CoinsList          |
 |             /global             |   [/]   |           Global            |

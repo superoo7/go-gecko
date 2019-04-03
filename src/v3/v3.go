@@ -58,6 +58,18 @@ func SimpleSupportedVSCurrencies() (*types.SimpleSupportedVSCurrencies, error) {
 	return data, nil
 }
 
+// CoinsList https://api.coingecko.com/api/v3/coins/list
+func CoinsList() (*types.CoinList, error) {
+	url := fmt.Sprintf("%s/coins/list", baseURL)
+	resp, err := helper.MakeReq(url)
+	if err != nil {
+		return nil, err
+	}
+	var data *types.CoinList
+	err = json.Unmarshal(resp, &data)
+	return data, nil
+}
+
 // Global https://api.coingecko.com/api/v3/global
 func Global() (*types.Global, error) {
 	url := fmt.Sprintf("%s/global", baseURL)
