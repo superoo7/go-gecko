@@ -73,6 +73,27 @@ func CoinsList() (*types.CoinList, error) {
 	return data, nil
 }
 
+// CoinsMarket
+
+// CoinsId
+
+// CoinsIDTickers
+
+// CoinsIDHistory
+
+// CoinsIDMarketChart
+
+// CoinsIDStatusUpdates
+
+// CoinsIDContractAddress https://api.coingecko.com/api/v3/coins/{id}/contract/{contract_address}
+// func CoinsIDContractAddress(id string, address string) (nil, error) {
+// 	url := fmt.Sprintf("%s/coins/%s/contract/%s", baseURL, id, address)
+// 	resp, err := helper.MakeReq(url)
+// 	if err != nil {
+// 		return nil, err
+// 	}
+// }
+
 // EventsCountries https://api.coingecko.com/api/v3/events/countries
 func EventsCountries() ([]types.EventCountryItem, error) {
 	url := fmt.Sprintf("%s/events/countries", baseURL)

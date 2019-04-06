@@ -3,6 +3,38 @@ package types
 // AllCurrencies map all currencies (USD, BTC) to float64
 type AllCurrencies map[string]float64
 
+// LocalizationItem map all locale (en, zh) into respective string
+type LocalizationItem map[string]string
+
+// DescriptionItem map all description (in locale) into respective string
+type DescriptionItem map[string]string
+
+// LinksItem map all links
+type LinksItem map[string][]string
+
+// MarketDataItem map all market data item
+type MarketDataItem struct {
+	CurrentPrice        AllCurrencies     `json:"current_price"`
+	ROI                 AllCurrencies     `json:"roi"`
+	ATH                 AllCurrencies     `json:"ath"`
+	ATHChangePercentage AllCurrencies     `json:"ath_change_percentage"`
+	ATHDate             map[string]string `json:"ath_date"`
+	MarketCap           AllCurrencies     `json:"market_cap"`
+	MarketCapRank       uint16            `json:"market_cap_rank"`
+	TotalVolume         AllCurrencies     `json:"total_volume"`
+	High24              AllCurrencies     `json:"high_24h"`
+	Low24               AllCurrencies     `json:"low_24h"`
+}
+
+// ImageItem struct for all sizes of image
+type ImageItem struct {
+	Thumb string `json:"thumb"`
+	Small string `json:"small"`
+	Large string `json:"large"`
+}
+
+// Type Specific types
+
 // CoinsListItem item in CoinList
 type CoinsListItem struct {
 	ID     string `json:"id"`
