@@ -18,7 +18,8 @@ type SimpleSupportedVSCurrencies []string
 // CoinList https://api.coingecko.com/api/v3/coins/list
 type CoinList []CoinsListItem
 
-// CoinsMarket
+// CoinsMarket https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1&sparkline=false
+type CoinsMarket []CoinsMarketItem
 
 // CoinsId
 

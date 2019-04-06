@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/url"
+	"strconv"
 	"strings"
 
 	helper "github.com/superoo7/go-gecko/src/helper"
@@ -92,7 +93,49 @@ func CoinsList() (*types.CoinList, error) {
 	return data, nil
 }
 
-// CoinsMarket
+// CoinsMarket /coins/market
+func CoinsMarket(vsCurrency string, ids []string, order string, perPage int, page int, sparkline bool, priceChangePercentage []string) (*types.CoinsMarket, error) {
+	if len(vsCurrency) == 0 {
+		return nil, fmt.Errorf("vs_currency is required")
+	}
+	params := url.Values{}
+	// vs_currency
+	params.Add("vs_currency", vsCurrency)
+	// order
+	if len(order) == 0 {
+		order = types.OrderTypeObject.MarketCapDesc
+	}
+	params.Add("order", order)
+	// ids
+	if len(ids) != 0 {
+		idsParam := strings.Join(ids[:], ",")
+		params.Add("ids", idsParam)
+	}
+	// per_page
+	if perPage <= 0 || perPage > 250 {
+		perPage = 100
+	}
+	params.Add("per_page", strconv.Itoa(perPage))
+	params.Add("page", strconv.Itoa(page))
+	// sparkline
+	params.Add("sparkline", strconv.FormatBool(sparkline))
+	// price_change_percentage
+	if len(priceChangePercentage) != 0 {
+		priceChangePercentageParam := strings.Join(priceChangePercentage[:], ",")
+		params.Add("price_change_percentage", priceChangePercentageParam)
+	}
+	url := fmt.Sprintf("%s/coins/markets?%s", baseURL, params.Encode())
+	resp, err := helper.MakeReq(url)
+	if err != nil {
+		return nil, err
+	}
+	var data *types.CoinsMarket
+	err = json.Unmarshal(resp, &data)
+	if err != nil {
+		return nil, err
+	}
+	return data, nil
+}
 
 // CoinsId
 
