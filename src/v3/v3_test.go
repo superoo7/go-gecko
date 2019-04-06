@@ -39,6 +39,28 @@ func TestSimpleSinglePrice(t *testing.T) {
 	}
 }
 
+func TestSimplePrice(t *testing.T) {
+	err := setupGock("json/simple_price.json", "/simple/price")
+	if err != nil {
+		t.FailNow()
+	}
+	ids := []string{"bitcoin", "ethereum"}
+	vc := []string{"usd", "myr"}
+	sp, err := SimplePrice(ids, vc)
+	if err != nil {
+		t.FailNow()
+	}
+	bitcoin := (*sp)["bitcoin"]
+	eth := (*sp)["ethereum"]
+
+	if bitcoin["usd"] != 5005.73 || bitcoin["myr"] != 20474 {
+		t.FailNow()
+	}
+	if eth["usd"] != 163.58 || eth["myr"] != 669.07 {
+		t.FailNow()
+	}
+}
+
 func TestSimpleSupportedVSCurrencies(t *testing.T) {
 	err := setupGock("json/simple_supported_vs_currencies.json", "/simple/supported_vs_currencies")
 	s, err := SimpleSupportedVSCurrencies()

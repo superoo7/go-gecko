@@ -3,6 +3,7 @@ package coingecko
 import (
 	"encoding/json"
 	"fmt"
+	"net/url"
 	"strings"
 
 	helper "github.com/superoo7/go-gecko/src/helper"
@@ -26,24 +27,42 @@ func Ping() (*types.Ping, error) {
 	return data, nil
 }
 
-// SimpleSinglePrice /simple/price (id, vs_currency)
-func SimpleSinglePrice(cID string, vC string) (*types.SimpleSinglePrice, error) {
-	cID = strings.ToLower(cID)
-	vC = strings.ToLower(vC)
-	params := []string{fmt.Sprintf("ids=%s", cID), fmt.Sprintf("vs_currencies=%s", vC)}
-	url := fmt.Sprintf("%s/simple/price?%s", baseURL, strings.Join(params, "&"))
+// SimpleSinglePrice /simple/price  Single ID and Currency (ids, vs_currency)
+func SimpleSinglePrice(id string, vsCurrency string) (*types.SimpleSinglePrice, error) {
+	idParam := []string{strings.ToLower(id)}
+	vcParam := []string{strings.ToLower(vsCurrency)}
+
+	t, err := SimplePrice(idParam, vcParam)
+	if err != nil {
+		return nil, err
+	}
+	c := (*t)[id]
+	data := &types.SimpleSinglePrice{ID: id, Currency: vsCurrency, MarketPrice: c[vsCurrency]}
+	return data, nil
+}
+
+// SimplePrice /simple/price Multiple ID and Currency (ids, vs_currencies)
+func SimplePrice(ids []string, vsCurrencies []string) (*map[string]map[string]float32, error) {
+	params := url.Values{}
+	idsParam := strings.Join(ids[:], ",")
+	vsCurrenciesParam := strings.Join(vsCurrencies[:], ",")
+
+	params.Add("ids", idsParam)
+	params.Add("vs_currencies", vsCurrenciesParam)
+
+	url := fmt.Sprintf("%s/simple/price?%s", baseURL, params.Encode())
 	resp, err := helper.MakeReq(url)
 	if err != nil {
 		return nil, err
 	}
+
 	t := make(map[string]map[string]float32)
 	err = json.Unmarshal(resp, &t)
 	if err != nil {
 		return nil, err
 	}
-	c := t[cID]
-	data := &types.SimpleSinglePrice{ID: cID, Currency: vC, MarketPrice: c[vC]}
-	return data, nil
+
+	return &t, nil
 }
 
 // SimpleSupportedVSCurrencies /simple/supported_vs_currencies
@@ -58,7 +77,7 @@ func SimpleSupportedVSCurrencies() (*types.SimpleSupportedVSCurrencies, error) {
 	return data, nil
 }
 
-// CoinsList https://api.coingecko.com/api/v3/coins/list
+// CoinsList /coins/list
 func CoinsList() (*types.CoinList, error) {
 	url := fmt.Sprintf("%s/coins/list", baseURL)
 	resp, err := helper.MakeReq(url)
