@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/url"
-	"strconv"
 	"strings"
 
 	helper "github.com/superoo7/go-gecko/src/helper"
@@ -115,10 +114,10 @@ func CoinsMarket(vsCurrency string, ids []string, order string, perPage int, pag
 	if perPage <= 0 || perPage > 250 {
 		perPage = 100
 	}
-	params.Add("per_page", strconv.Itoa(perPage))
-	params.Add("page", strconv.Itoa(page))
+	params.Add("per_page", helper.Int2String(perPage))
+	params.Add("page", helper.Int2String(page))
 	// sparkline
-	params.Add("sparkline", strconv.FormatBool(sparkline))
+	params.Add("sparkline", helper.Bool2String(sparkline))
 	// price_change_percentage
 	if len(priceChangePercentage) != 0 {
 		priceChangePercentageParam := strings.Join(priceChangePercentage[:], ",")
@@ -137,7 +136,30 @@ func CoinsMarket(vsCurrency string, ids []string, order string, perPage int, pag
 	return data, nil
 }
 
-// CoinsId
+// CoinsID /coins/{id}
+func CoinsID(id string, localization bool, tickers bool, marketData bool, communityData bool, developerData bool, sparkline bool) (interface{}, error) {
+	if len(id) == 0 {
+		return nil, fmt.Errorf("id is required")
+	}
+	params := url.Values{}
+	params.Add("localization", helper.Bool2String(sparkline))
+	params.Add("tickers", helper.Bool2String(tickers))
+	params.Add("market_data", helper.Bool2String(marketData))
+	params.Add("community_data", helper.Bool2String(communityData))
+	params.Add("developer_data", helper.Bool2String(developerData))
+	params.Add("sparkline", helper.Bool2String(sparkline))
+	url := fmt.Sprintf("%s/coins/%s?%s", baseURL, id, params.Encode())
+	resp, err := helper.MakeReq(url)
+	if err != nil {
+		return nil, err
+	}
+	var data *types.CoinsID
+	err = json.Unmarshal(resp, &data)
+	if err != nil {
+		return nil, err
+	}
+	return data, nil
+}
 
 // CoinsIDTickers
 

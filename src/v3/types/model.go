@@ -56,20 +56,74 @@ type LocalizationItem map[string]string
 type DescriptionItem map[string]string
 
 // LinksItem map all links
-type LinksItem map[string][]string
+type LinksItem map[string]interface{}
 
 // MarketDataItem map all market data item
 type MarketDataItem struct {
-	CurrentPrice        AllCurrencies     `json:"current_price"`
-	ROI                 AllCurrencies     `json:"roi"`
-	ATH                 AllCurrencies     `json:"ath"`
-	ATHChangePercentage AllCurrencies     `json:"ath_change_percentage"`
-	ATHDate             map[string]string `json:"ath_date"`
-	MarketCap           AllCurrencies     `json:"market_cap"`
-	MarketCapRank       uint16            `json:"market_cap_rank"`
-	TotalVolume         AllCurrencies     `json:"total_volume"`
-	High24              AllCurrencies     `json:"high_24h"`
-	Low24               AllCurrencies     `json:"low_24h"`
+	CurrentPrice                           AllCurrencies     `json:"current_price"`
+	ROI                                    *ROIItem          `json:"roi"`
+	ATH                                    AllCurrencies     `json:"ath"`
+	ATHChangePercentage                    AllCurrencies     `json:"ath_change_percentage"`
+	ATHDate                                map[string]string `json:"ath_date"`
+	MarketCap                              AllCurrencies     `json:"market_cap"`
+	MarketCapRank                          uint16            `json:"market_cap_rank"`
+	TotalVolume                            AllCurrencies     `json:"total_volume"`
+	High24                                 AllCurrencies     `json:"high_24h"`
+	Low24                                  AllCurrencies     `json:"low_24h"`
+	PriceChange24h                         string            `json:"price_change_24h"`
+	PriceChangePercentage24h               string            `json:"price_change_percentage_24h"`
+	PriceChangePercentage7d                string            `json:"price_change_percentage_7d"`
+	PriceChangePercentage14d               string            `json:"price_change_percentage_14d"`
+	PriceChangePercentage30d               string            `json:"price_change_percentage_30d"`
+	PriceChangePercentage60d               string            `json:"price_change_percentage_60d"`
+	PriceChangePercentage200d              string            `json:"price_change_percentage_200d"`
+	PriceChangePercentage1y                string            `json:"price_change_percentage_1y"`
+	MarketCapChange24h                     string            `json:"market_cap_change_24h"`
+	MarketCapChangePercentage24h           string            `json:"market_cap_change_percentage_24h"`
+	PriceChange24hInCurrency               AllCurrencies     `json:"price_change_24h_in_currency"`
+	PriceChangePercentage1hInCurrency      AllCurrencies     `json:"price_change_percentage_1h_in_currency"`
+	PriceChangePercentage24hInCurrency     AllCurrencies     `json:"price_change_percentage_24h_in_currency"`
+	PriceChangePercentage7dInCurrency      AllCurrencies     `json:"price_change_percentage_7d_in_currency"`
+	PriceChangePercentage14dInCurrency     AllCurrencies     `json:"price_change_percentage_14d_in_currency"`
+	PriceChangePercentage30dInCurrency     AllCurrencies     `json:"price_change_percentage_30d_in_currency"`
+	PriceChangePercentage60dInCurrency     AllCurrencies     `json:"price_change_percentage_60d_in_currency"`
+	PriceChangePercentage200dInCurrency    AllCurrencies     `json:"price_change_percentage_200d_in_currency"`
+	PriceChangePercentage1yInCurrency      AllCurrencies     `json:"price_change_percentage_1y_in_currency"`
+	MarketCapChange24hInCurrency           AllCurrencies     `json:"market_cap_change_24h_in_currency"`
+	MarketCapChangePercentage24hInCurrency AllCurrencies     `json:"market_cap_change_percentage_24h_in_currency"`
+	TotalSupply                            *int              `json:"total_supply"`
+	CirculatingSupply                      string            `json:"circulating_supply"`
+	Sparkline                              *SparklineItem    `json:"sparkline_7d"`
+	LastUpdated                            string            `json:"last_updated"`
+}
+
+// CommunityDataItem map all community data item
+type CommunityDataItem struct {
+	FacebookLikes            *uint    `json:"facebook_likes"`
+	TwitterFollowers         *uint    `json:"twitter_followers"`
+	RedditAveragePosts48h    *float64 `json:"reddit_average_posts_48h"`
+	RedditAverageComments48h *float64 `json:"reddit_average_comments_48h"`
+	RedditSubscribers        *uint    `json:"reddit_subscribers"`
+	RedditAccountsActive48h  *uint    `json:"reddit_accounts_active_48h"`
+	TelegramChannelUserCount *uint    `json:"telegram_channel_user_count"`
+}
+
+// DeveloperDataItem map all developer data item
+type DeveloperDataItem struct {
+	Forks              *uint `json:"forks"`
+	Stars              *uint `json:"stars"`
+	Subscribers        *uint `json:"subscribers"`
+	TotalIssues        *uint `json:"total_issues"`
+	ClosedIssues       *uint `json:"closed_issues"`
+	PRMerged           *uint `json:"pull_requests_merged"`
+	PRContributors     *uint `json:"pull_request_contributors"`
+	CommitsCount4Weeks *uint `json:"commit_count_4_weeks"`
+}
+
+// PublicInterestItem map all public interest item
+type PublicInterestItem struct {
+	AlexaRank   uint `json:"alexa_rank"`
+	BingMatches uint `json:"bing_matches"`
 }
 
 // ImageItem struct for all sizes of image
@@ -77,6 +131,18 @@ type ImageItem struct {
 	Thumb string `json:"thumb"`
 	Small string `json:"small"`
 	Large string `json:"large"`
+}
+
+// ROIItem ROI Item
+type ROIItem struct {
+	Times      float64 `json:"times"`
+	Currency   string  `json:"currency"`
+	Percentage float64 `json:"percentage"`
+}
+
+// SparklineItem for sparkline
+type SparklineItem struct {
+	Price []float64 `json:"price"`
 }
 
 // Type Specific types
@@ -97,38 +163,32 @@ type CoinsListItem struct {
 // CoinsMarketItem item in CoinMarket
 type CoinsMarketItem struct {
 	coinBaseStruct
-	Image                        string  `json:"image"`
-	CurrentPrice                 float64 `json:"current_price"`
-	MarketCap                    float64 `json:"market_cap"`
-	MarketCapRank                int16   `json:"market_cap_rank"`
-	TotalVolume                  float64 `json:"total_volume"`
-	High24                       float64 `json:"high_24h"`
-	Low24                        float64 `json:"low_24h"`
-	PriceChange24h               float64 `json:"price_change_24h"`
-	PriceChangePercentage24h     float64 `json:"price_change_percentage_24h"`
-	MarketCapChange24h           float64 `json:"market_cap_change_24h"`
-	MarketCapChangePercentage24h float64 `json:"market_cap_change_percentage_24h"`
-	CirculatingSupply            string  `json:"circulating_supply"`
-	TotalSupply                  float64 `json:"total_supply"`
-	ATH                          float64 `json:"ath"`
-	ATHChangePercentage          float64 `json:"ath_change_percentage"`
-	ATHDate                      string  `json:"ath_date"`
-	ROI                          *struct {
-		Times      float64 `json:"times"`
-		Currency   string  `json:"currency"`
-		Percentage float64 `json:"percentage"`
-	} `json:"roi"`
-	LastUpdated   string `json:"last_updated"`
-	SparklineIn7d *struct {
-		Price []float64 `json:"price"`
-	} `json:"sparkline_in_7d"`
-	PriceChangePercentage1hInCurrency   *float64 `json:"price_change_percentage_1h_in_currency"`
-	PriceChangePercentage24hInCurrency  *float64 `json:"price_change_percentage_24h_in_currency"`
-	PriceChangePercentage7dInCurrency   *float64 `json:"price_change_percentage_7d_in_currency"`
-	PriceChangePercentage14dInCurrency  *float64 `json:"price_change_percentage_14d_in_currency"`
-	PriceChangePercentage30dInCurrency  *float64 `json:"price_change_percentage_30d_in_currency"`
-	PriceChangePercentage200dInCurrency *float64 `json:"price_change_percentage_200d_in_currency"`
-	PriceChangePercentage1yInCurrency   *float64 `json:"price_change_percentage_1y_in_currency"`
+	Image                               string         `json:"image"`
+	CurrentPrice                        float64        `json:"current_price"`
+	MarketCap                           float64        `json:"market_cap"`
+	MarketCapRank                       int16          `json:"market_cap_rank"`
+	TotalVolume                         float64        `json:"total_volume"`
+	High24                              float64        `json:"high_24h"`
+	Low24                               float64        `json:"low_24h"`
+	PriceChange24h                      float64        `json:"price_change_24h"`
+	PriceChangePercentage24h            float64        `json:"price_change_percentage_24h"`
+	MarketCapChange24h                  float64        `json:"market_cap_change_24h"`
+	MarketCapChangePercentage24h        float64        `json:"market_cap_change_percentage_24h"`
+	CirculatingSupply                   string         `json:"circulating_supply"`
+	TotalSupply                         float64        `json:"total_supply"`
+	ATH                                 float64        `json:"ath"`
+	ATHChangePercentage                 float64        `json:"ath_change_percentage"`
+	ATHDate                             string         `json:"ath_date"`
+	ROI                                 *ROIItem       `json:"roi"`
+	LastUpdated                         string         `json:"last_updated"`
+	SparklineIn7d                       *SparklineItem `json:"sparkline_in_7d"`
+	PriceChangePercentage1hInCurrency   *float64       `json:"price_change_percentage_1h_in_currency"`
+	PriceChangePercentage24hInCurrency  *float64       `json:"price_change_percentage_24h_in_currency"`
+	PriceChangePercentage7dInCurrency   *float64       `json:"price_change_percentage_7d_in_currency"`
+	PriceChangePercentage14dInCurrency  *float64       `json:"price_change_percentage_14d_in_currency"`
+	PriceChangePercentage30dInCurrency  *float64       `json:"price_change_percentage_30d_in_currency"`
+	PriceChangePercentage200dInCurrency *float64       `json:"price_change_percentage_200d_in_currency"`
+	PriceChangePercentage1yInCurrency   *float64       `json:"price_change_percentage_1y_in_currency"`
 }
 
 // EventCountryItem item in EventsCountries

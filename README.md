@@ -8,17 +8,18 @@ Simple API Client for CoinGecko written in Golang
 
 [Refer to CoinGecko official API](https://www.coingecko.com/api)
 
-|            Endpoint             | Status | Testing |            Function            |
-| :-----------------------------: | :----: | :-----: | :----------------------------: |
-|              /ping              |  [/]   |   [/]   |              Ping              |
-|          /simple/price          |  [/]   |   [/]   | SimpleSinglePrice, SimplePrice |
-| /simple/supported_vs_currencies |  [/]   |   [/]   |  SimpleSupportedVSCurrencies   |
-|           /coins/list           |  [/]   |   [/]   |           CoinsList            |
-|          /coins/market          |  [/]   |   [/]   |          CoinsMarket           |
-|        /events/countries        |  [/]   |         |        EventsCountries         |
-|          /events/types          |  [/]   |         |           EventsType           |
-|         /exchange_rates         |  [/]   |         |          ExchangeRate          |
-|             /global             |  [/]   |         |             Global             |
+|            Endpoint             |  Status   | Testing |            Function            |
+| :-----------------------------: | :-------: | :-----: | :----------------------------: |
+|              /ping              |    [/]    |   [/]   |              Ping              |
+|          /simple/price          |    [/]    |   [/]   | SimpleSinglePrice, SimplePrice |
+| /simple/supported_vs_currencies |    [/]    |   [/]   |  SimpleSupportedVSCurrencies   |
+|           /coins/list           |    [/]    |   [/]   |           CoinsList            |
+|          /coins/market          |    [/]    |   [/]   |          CoinsMarket           |
+|           /coins/{id}           | [partial] |         |            CoinsID             |
+|        /events/countries        |    [/]    |         |        EventsCountries         |
+|          /events/types          |    [/]    |         |           EventsType           |
+|         /exchange_rates         |    [/]    |         |          ExchangeRate          |
+|             /global             |    [/]    |         |             Global             |
 
 ## Usage
 

@@ -7,5 +7,5 @@ go:
   - master
 
 script:
-  - go build .
+  - go build src/v3/v3_test.go src/v3/v3.go
   - go test src/v3/v3_test.go src/v3/v3.go
