@@ -4,9 +4,11 @@
 
 Simple API Client for CoinGecko written in Golang
 
-![gogecko](gogecko.svg)
+<p align="center">
+    <img src="gogecko.png" alt="gogecko" height="200" />
+</p>
 
-gopher resources from [free-gophers-pack]](https://github.com/MariaLetta/free-gophers-pack)
+gopher resources from [free-gophers-pack](https://github.com/MariaLetta/free-gophers-pack)
 
 ## Available endpoint
 
