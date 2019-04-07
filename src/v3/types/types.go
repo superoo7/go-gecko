@@ -43,9 +43,9 @@ type CoinsID struct {
 	CommunityData       *CommunityDataItem  `json:"community_data"`
 	DeveloperData       *DeveloperDataItem  `json:"developer_data"`
 	PublicInterestStats *PublicInterestItem `json:"public_interest_stats"`
-	// StatusUpdates
-	LastUpdated string `json:"last_updated"`
-	// Tickers
+	StatusUpdates       *[]StatusUpdateItem `json:"status_updates"`
+	LastUpdated         string              `json:"last_updated"`
+	Tickers             *[]TickerItem       `json:"tickers"`
 }
 
 // CoinsIDTickers

@@ -46,11 +46,21 @@ var PriceChangePercentageObject = &PriceChangePercentage{
 	PCP1y:   "1y",
 }
 
+// SHARED
+// coinBaseStruct [private]
+type coinBaseStruct struct {
+	ID     string `json:"id"`
+	Symbol string `json:"symbol"`
+	Name   string `json:"name"`
+}
+
 // AllCurrencies map all currencies (USD, BTC) to float64
 type AllCurrencies map[string]float64
 
 // LocalizationItem map all locale (en, zh) into respective string
 type LocalizationItem map[string]string
+
+// TYPES
 
 // DescriptionItem map all description (in locale) into respective string
 type DescriptionItem map[string]string
@@ -145,14 +155,38 @@ type SparklineItem struct {
 	Price []float64 `json:"price"`
 }
 
-// Type Specific types
+// TickerItem for ticker
+type TickerItem struct {
+	Base   string `json:"base"`
+	Target string `json:"target"`
+	Market struct {
+		Name             string `json:"name"`
+		Identifier       string `json:"identifier"`
+		TradingIncentive bool   `json:"has_trading_incentive"`
+	} `json:"market"`
+	Last            float64           `json:"last"`
+	ConvertedLast   map[string]string `json:"converted_last"`
+	Volume          float64           `json:"volume"`
+	ConvertedVolume map[string]string `json:"converted_volume"`
+	Timestamp       string            `json:"timestamp"`
+	IsAnomaly       bool              `json:"is_anomaly"`
+	IsStale         bool              `json:"is_stale"`
+	CoinID          string            `json:"coin_id"`
+}
 
-// SHARED
-// coinBaseStruct [private]
-type coinBaseStruct struct {
-	ID     string `json:"id"`
-	Symbol string `json:"symbol"`
-	Name   string `json:"name"`
+// StatusUpdateItem for BEAM
+type StatusUpdateItem struct {
+	Description string `json:"description"`
+	Category    string `json:"category"`
+	CreatedAt   string `json:"created_at"`
+	User        string `json:"user"`
+	UserTitle   string `json:"user_title"`
+	Pin         bool   `json:"pin"`
+	Project     struct {
+		coinBaseStruct
+		Type  string    `json:"type"`
+		Image ImageItem `json:"image"`
+	} `json:"project"`
 }
 
 // CoinsListItem item in CoinList
