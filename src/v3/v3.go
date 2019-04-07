@@ -161,7 +161,27 @@ func CoinsID(id string, localization bool, tickers bool, marketData bool, commun
 	return data, nil
 }
 
-// CoinsIDTickers
+// CoinsIDTickers /coins/{id}/tickers
+func CoinsIDTickers(id string, page int) (*types.CoinsIDTickers, error) {
+	if len(id) == 0 {
+		return nil, fmt.Errorf("id is required")
+	}
+	params := url.Values{}
+	if page > 0 {
+		params.Add("page", helper.Int2String(page))
+	}
+	url := fmt.Sprintf("%s/coins/%s/tickers?%s", baseURL, id, params.Encode())
+	resp, err := helper.MakeReq(url)
+	if err != nil {
+		return nil, err
+	}
+	var data *types.CoinsIDTickers
+	err = json.Unmarshal(resp, &data)
+	if err != nil {
+		return nil, err
+	}
+	return data, nil
+}
 
 // CoinsIDHistory
 

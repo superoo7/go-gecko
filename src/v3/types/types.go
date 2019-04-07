@@ -48,7 +48,11 @@ type CoinsID struct {
 	Tickers             *[]TickerItem       `json:"tickers"`
 }
 
-// CoinsIDTickers
+// CoinsIDTickers https://api.coingecko.com/api/v3/coins/steem/tickers?page=1
+type CoinsIDTickers struct {
+	Name    string       `json:"name"`
+	Tickers []TickerItem `json:"tickers"`
+}
 
 // CoinsIDHistory
 
