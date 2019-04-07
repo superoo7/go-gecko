@@ -54,7 +54,16 @@ type CoinsIDTickers struct {
 	Tickers []TickerItem `json:"tickers"`
 }
 
-// CoinsIDHistory
+// CoinsIDHistory https://api.coingecko.com/api/v3/coins/steem/history?date=30-12-2018
+type CoinsIDHistory struct {
+	coinBaseStruct
+	Localization   LocalizationItem    `json:"localization"`
+	Image          ImageItem           `json:"image"`
+	MarketData     *MarketDataItem     `json:"market_data"`
+	CommunityData  *CommunityDataItem  `json:"community_data"`
+	DeveloperData  *DeveloperDataItem  `json:"developer_data"`
+	PublicInterest *PublicInterestItem `json:"public_interest_stats"`
+}
 
 // CoinsIDMarketChart
 

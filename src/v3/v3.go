@@ -183,7 +183,27 @@ func CoinsIDTickers(id string, page int) (*types.CoinsIDTickers, error) {
 	return data, nil
 }
 
-// CoinsIDHistory
+// CoinsIDHistory /coins/{id}/history?date={date}&localization=false
+func CoinsIDHistory(id string, date string, localization bool) (*types.CoinsIDHistory, error) {
+	if len(id) == 0 || len(date) == 0 {
+		return nil, fmt.Errorf("id and date is required")
+	}
+	params := url.Values{}
+	params.Add("date", date)
+	params.Add("localization", helper.Bool2String(localization))
+
+	url := fmt.Sprintf("%s/coins/%s/history?%s", baseURL, id, params.Encode())
+	resp, err := helper.MakeReq(url)
+	if err != nil {
+		return nil, err
+	}
+	var data *types.CoinsIDHistory
+	err = json.Unmarshal(resp, &data)
+	if err != nil {
+		return nil, err
+	}
+	return data, nil
+}
 
 // CoinsIDMarketChart
 

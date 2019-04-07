@@ -114,7 +114,7 @@ type CommunityDataItem struct {
 	RedditAveragePosts48h    *float64 `json:"reddit_average_posts_48h"`
 	RedditAverageComments48h *float64 `json:"reddit_average_comments_48h"`
 	RedditSubscribers        *uint    `json:"reddit_subscribers"`
-	RedditAccountsActive48h  *uint    `json:"reddit_accounts_active_48h"`
+	RedditAccountsActive48h  *string  `json:"reddit_accounts_active_48h"`
 	TelegramChannelUserCount *uint    `json:"telegram_channel_user_count"`
 }
 
