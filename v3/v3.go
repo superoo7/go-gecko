@@ -6,8 +6,9 @@ import (
 	"net/url"
 	"strings"
 
-	helper "github.com/superoo7/go-gecko/src/helper"
-	types "github.com/superoo7/go-gecko/src/v3/types"
+	format "github.com/superoo7/go-gecko/format"
+	request "github.com/superoo7/go-gecko/request"
+	types "github.com/superoo7/go-gecko/v3/types"
 )
 
 var baseURL = "https://api.coingecko.com/api/v3"
@@ -15,7 +16,7 @@ var baseURL = "https://api.coingecko.com/api/v3"
 // Ping /ping endpoint
 func Ping() (*types.Ping, error) {
 	url := fmt.Sprintf("%s/ping", baseURL)
-	resp, err := helper.MakeReq(url)
+	resp, err := request.MakeReq(url)
 	if err != nil {
 		return nil, err
 	}
@@ -51,7 +52,7 @@ func SimplePrice(ids []string, vsCurrencies []string) (*map[string]map[string]fl
 	params.Add("vs_currencies", vsCurrenciesParam)
 
 	url := fmt.Sprintf("%s/simple/price?%s", baseURL, params.Encode())
-	resp, err := helper.MakeReq(url)
+	resp, err := request.MakeReq(url)
 	if err != nil {
 		return nil, err
 	}
@@ -68,7 +69,7 @@ func SimplePrice(ids []string, vsCurrencies []string) (*map[string]map[string]fl
 // SimpleSupportedVSCurrencies /simple/supported_vs_currencies
 func SimpleSupportedVSCurrencies() (*types.SimpleSupportedVSCurrencies, error) {
 	url := fmt.Sprintf("%s/simple/supported_vs_currencies", baseURL)
-	resp, err := helper.MakeReq(url)
+	resp, err := request.MakeReq(url)
 	if err != nil {
 		return nil, err
 	}
@@ -80,7 +81,7 @@ func SimpleSupportedVSCurrencies() (*types.SimpleSupportedVSCurrencies, error) {
 // CoinsList /coins/list
 func CoinsList() (*types.CoinList, error) {
 	url := fmt.Sprintf("%s/coins/list", baseURL)
-	resp, err := helper.MakeReq(url)
+	resp, err := request.MakeReq(url)
 	if err != nil {
 		return nil, err
 	}
@@ -114,17 +115,17 @@ func CoinsMarket(vsCurrency string, ids []string, order string, perPage int, pag
 	if perPage <= 0 || perPage > 250 {
 		perPage = 100
 	}
-	params.Add("per_page", helper.Int2String(perPage))
-	params.Add("page", helper.Int2String(page))
+	params.Add("per_page", format.Int2String(perPage))
+	params.Add("page", format.Int2String(page))
 	// sparkline
-	params.Add("sparkline", helper.Bool2String(sparkline))
+	params.Add("sparkline", format.Bool2String(sparkline))
 	// price_change_percentage
 	if len(priceChangePercentage) != 0 {
 		priceChangePercentageParam := strings.Join(priceChangePercentage[:], ",")
 		params.Add("price_change_percentage", priceChangePercentageParam)
 	}
 	url := fmt.Sprintf("%s/coins/markets?%s", baseURL, params.Encode())
-	resp, err := helper.MakeReq(url)
+	resp, err := request.MakeReq(url)
 	if err != nil {
 		return nil, err
 	}
@@ -142,14 +143,14 @@ func CoinsID(id string, localization bool, tickers bool, marketData bool, commun
 		return nil, fmt.Errorf("id is required")
 	}
 	params := url.Values{}
-	params.Add("localization", helper.Bool2String(sparkline))
-	params.Add("tickers", helper.Bool2String(tickers))
-	params.Add("market_data", helper.Bool2String(marketData))
-	params.Add("community_data", helper.Bool2String(communityData))
-	params.Add("developer_data", helper.Bool2String(developerData))
-	params.Add("sparkline", helper.Bool2String(sparkline))
+	params.Add("localization", format.Bool2String(sparkline))
+	params.Add("tickers", format.Bool2String(tickers))
+	params.Add("market_data", format.Bool2String(marketData))
+	params.Add("community_data", format.Bool2String(communityData))
+	params.Add("developer_data", format.Bool2String(developerData))
+	params.Add("sparkline", format.Bool2String(sparkline))
 	url := fmt.Sprintf("%s/coins/%s?%s", baseURL, id, params.Encode())
-	resp, err := helper.MakeReq(url)
+	resp, err := request.MakeReq(url)
 	if err != nil {
 		return nil, err
 	}
@@ -168,10 +169,10 @@ func CoinsIDTickers(id string, page int) (*types.CoinsIDTickers, error) {
 	}
 	params := url.Values{}
 	if page > 0 {
-		params.Add("page", helper.Int2String(page))
+		params.Add("page", format.Int2String(page))
 	}
 	url := fmt.Sprintf("%s/coins/%s/tickers?%s", baseURL, id, params.Encode())
-	resp, err := helper.MakeReq(url)
+	resp, err := request.MakeReq(url)
 	if err != nil {
 		return nil, err
 	}
@@ -190,10 +191,10 @@ func CoinsIDHistory(id string, date string, localization bool) (*types.CoinsIDHi
 	}
 	params := url.Values{}
 	params.Add("date", date)
-	params.Add("localization", helper.Bool2String(localization))
+	params.Add("localization", format.Bool2String(localization))
 
 	url := fmt.Sprintf("%s/coins/%s/history?%s", baseURL, id, params.Encode())
-	resp, err := helper.MakeReq(url)
+	resp, err := request.MakeReq(url)
 	if err != nil {
 		return nil, err
 	}
@@ -212,7 +213,7 @@ func CoinsIDHistory(id string, date string, localization bool) (*types.CoinsIDHi
 // CoinsIDContractAddress https://api.coingecko.com/api/v3/coins/{id}/contract/{contract_address}
 // func CoinsIDContractAddress(id string, address string) (nil, error) {
 // 	url := fmt.Sprintf("%s/coins/%s/contract/%s", baseURL, id, address)
-// 	resp, err := helper.MakeReq(url)
+// 	resp, err := request.MakeReq(url)
 // 	if err != nil {
 // 		return nil, err
 // 	}
@@ -221,7 +222,7 @@ func CoinsIDHistory(id string, date string, localization bool) (*types.CoinsIDHi
 // EventsCountries https://api.coingecko.com/api/v3/events/countries
 func EventsCountries() ([]types.EventCountryItem, error) {
 	url := fmt.Sprintf("%s/events/countries", baseURL)
-	resp, err := helper.MakeReq(url)
+	resp, err := request.MakeReq(url)
 	if err != nil {
 		return nil, err
 	}
@@ -237,7 +238,7 @@ func EventsCountries() ([]types.EventCountryItem, error) {
 // EventsTypes https://api.coingecko.com/api/v3/events/types
 func EventsTypes() (*types.EventsTypes, error) {
 	url := fmt.Sprintf("%s/events/types", baseURL)
-	resp, err := helper.MakeReq(url)
+	resp, err := request.MakeReq(url)
 	if err != nil {
 		return nil, err
 	}
@@ -253,7 +254,7 @@ func EventsTypes() (*types.EventsTypes, error) {
 // ExchangeRates https://api.coingecko.com/api/v3/exchange_rates
 func ExchangeRates() (*types.ExchangeRatesItem, error) {
 	url := fmt.Sprintf("%s/exchange_rates", baseURL)
-	resp, err := helper.MakeReq(url)
+	resp, err := request.MakeReq(url)
 	if err != nil {
 		return nil, err
 	}
@@ -268,7 +269,7 @@ func ExchangeRates() (*types.ExchangeRatesItem, error) {
 // Global https://api.coingecko.com/api/v3/global
 func Global() (*types.Global, error) {
 	url := fmt.Sprintf("%s/global", baseURL)
-	resp, err := helper.MakeReq(url)
+	resp, err := request.MakeReq(url)
 	if err != nil {
 		return nil, err
 	}
