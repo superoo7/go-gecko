@@ -8,5 +8,5 @@ go:
 
 script:
   - go get -u gopkg.in/h2non/gock.v1
-  - go build src/v3/v3_test.go src/v3/v3.go
-  - go test src/v3/v3_test.go src/v3/v3.go
+  - go build v3/v3_test.go v3/v3.go
+  - go test v3/v3_test.go v3/v3.go
