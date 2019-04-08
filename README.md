@@ -1,6 +1,6 @@
 # CoinGecko API Client for GoLang
 
-[![Build Status](https://travis-ci.com/superoo7/go-gecko.svg?branch=master)](https://travis-ci.com/superoo7/go-gecko)
+[![Build Status](https://travis-ci.com/superoo7/go-gecko.svg?branch=master)](https://travis-ci.com/superoo7/go-gecko) [![GoDoc](https://godoc.org/github.com/superoo7/go-gecko?status.svg)](https://godoc.org/github.com/superoo7/go-gecko)
 
 Simple API Client for CoinGecko written in Golang
 
