@@ -104,7 +104,7 @@ type MarketDataItem struct {
 	PriceChangePercentage1yInCurrency      AllCurrencies     `json:"price_change_percentage_1y_in_currency"`
 	MarketCapChange24hInCurrency           AllCurrencies     `json:"market_cap_change_24h_in_currency"`
 	MarketCapChangePercentage24hInCurrency AllCurrencies     `json:"market_cap_change_percentage_24h_in_currency"`
-	TotalSupply                            *int              `json:"total_supply"`
+	TotalSupply                            *float64          `json:"total_supply"`
 	CirculatingSupply                      float64           `json:"circulating_supply"`
 	Sparkline                              *SparklineItem    `json:"sparkline_7d"`
 	LastUpdated                            string            `json:"last_updated"`
