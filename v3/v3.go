@@ -206,7 +206,30 @@ func CoinsIDHistory(id string, date string, localization bool) (*types.CoinsIDHi
 	return data, nil
 }
 
-// CoinsIDMarketChart
+// CoinsIDMarketChart /coins/{id}/market_chart?vs_currency={usd, eur, jpy, etc.}&days={1,14,30,max}
+func CoinsIDMarketChart(id string, vs_currency string, days string) (*types.CoinsIDMarketChart, error) {
+	if len(id) == 0 || len(vs_currency) == 0 || len(days) == 0 {
+		return nil, fmt.Errorf("id, vs_currency, and days is required")
+	}
+
+	params := url.Values{}
+	params.Add("vs_currency", vs_currency)
+	params.Add("days", days)
+
+	url := fmt.Sprintf("%s/coins/%s/market_chart?%s", baseURL, id, params.Encode())
+	resp, err := request.MakeReq(url)
+	if err != nil {
+		return nil, err
+	}
+
+	m := types.CoinsIDMarketChart{}
+	err = json.Unmarshal(resp, &m)
+	if err != nil {
+		return &m, err
+	}
+
+	return &m, nil
+}
 
 // CoinsIDStatusUpdates
 

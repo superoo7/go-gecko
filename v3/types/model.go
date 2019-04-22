@@ -68,6 +68,9 @@ type DescriptionItem map[string]string
 // LinksItem map all links
 type LinksItem map[string]interface{}
 
+// ChartItem
+type ChartItem [2]float32
+
 // MarketDataItem map all market data item
 type MarketDataItem struct {
 	CurrentPrice                           AllCurrencies     `json:"current_price"`

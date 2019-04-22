@@ -65,7 +65,13 @@ type CoinsIDHistory struct {
 	PublicInterest *PublicInterestItem `json:"public_interest_stats"`
 }
 
-// CoinsIDMarketChart
+// CoinsIDMarketChart https://api.coingecko.com/api/v3/coins/bitcoin/market_chart?vs_currency=usd&days=1
+type CoinsIDMarketChart struct {
+	coinBaseStruct
+	Prices       *[]ChartItem `json:"prices"`
+	MarketCaps   *[]ChartItem `json:"market_caps"`
+	TotalVolumes *[]ChartItem `json:"total_volumes"`
+}
 
 // CoinsIDStatusUpdates
 
