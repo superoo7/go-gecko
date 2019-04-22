@@ -85,6 +85,7 @@ func CoinsList() (*types.CoinList, error) {
 	if err != nil {
 		return nil, err
 	}
+
 	var data *types.CoinList
 	err = json.Unmarshal(resp, &data)
 	if err != nil {
@@ -138,7 +139,7 @@ func CoinsMarket(vsCurrency string, ids []string, order string, perPage int, pag
 }
 
 // CoinsID /coins/{id}
-func CoinsID(id string, localization bool, tickers bool, marketData bool, communityData bool, developerData bool, sparkline bool) (interface{}, error) {
+func CoinsID(id string, localization bool, tickers bool, marketData bool, communityData bool, developerData bool, sparkline bool) (*types.CoinsID, error) {
 	if len(id) == 0 {
 		return nil, fmt.Errorf("id is required")
 	}
@@ -154,6 +155,7 @@ func CoinsID(id string, localization bool, tickers bool, marketData bool, commun
 	if err != nil {
 		return nil, err
 	}
+
 	var data *types.CoinsID
 	err = json.Unmarshal(resp, &data)
 	if err != nil {
