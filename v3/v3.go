@@ -3,20 +3,69 @@ package coingecko
 import (
 	"encoding/json"
 	"fmt"
+	"io/ioutil"
+	"net/http"
 	"net/url"
 	"strings"
 
-	format "github.com/superoo7/go-gecko/format"
-	request "github.com/superoo7/go-gecko/request"
-	types "github.com/superoo7/go-gecko/v3/types"
+	"github.com/superoo7/go-gecko/format"
+	"github.com/superoo7/go-gecko/request"
+	"github.com/superoo7/go-gecko/v3/types"
 )
 
 var baseURL = "https://api.coingecko.com/api/v3"
 
+// Client struct
+type Client struct {
+	httpClient *http.Client
+}
+
+// NewClient create new client object
+func NewClient(httpClient *http.Client) *Client {
+	if httpClient == nil {
+		httpClient = http.DefaultClient
+	}
+	return &Client{httpClient: httpClient}
+}
+
+// helper
+// doReq HTTP client
+func doReq(req *http.Request, client *http.Client) ([]byte, error) {
+	resp, err := client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer resp.Body.Close()
+	body, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		return nil, err
+	}
+	if 200 != resp.StatusCode {
+		return nil, fmt.Errorf("%s", body)
+	}
+	return body, nil
+}
+
+// makeReq HTTP request helper
+func (c *Client) makeReq(url string) ([]byte, error) {
+	req, err := http.NewRequest("GET", url, nil)
+
+	if err != nil {
+		return nil, err
+	}
+	resp, err := doReq(req, c.httpClient)
+	if err != nil {
+		return nil, err
+	}
+	return resp, err
+}
+
+// API
+
 // Ping /ping endpoint
-func Ping() (*types.Ping, error) {
+func (c *Client) Ping() (*types.Ping, error) {
 	url := fmt.Sprintf("%s/ping", baseURL)
-	resp, err := request.MakeReq(url)
+	resp, err := c.makeReq(url)
 	if err != nil {
 		return nil, err
 	}

@@ -8,7 +8,8 @@ import (
 )
 
 func main() {
-	ping, err := gecko.Ping()
+	c := gecko.NewClient(nil)
+	ping, err := c.Ping()
 	if err != nil {
 		log.Fatal(err)
 	}
