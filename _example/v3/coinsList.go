@@ -8,7 +8,8 @@ import (
 )
 
 func main() {
-	list, err := gecko.CoinsList()
+	cg := gecko.NewClient(nil)
+	list, err := cg.CoinsList()
 	if err != nil {
 		log.Fatal(err)
 	}

@@ -8,7 +8,8 @@ import (
 )
 
 func main() {
-	btc, err := gecko.CoinsIDHistory("bitcoin", "30-12-2018", true)
+	cg := gecko.NewClient(nil)
+	btc, err := cg.CoinsIDHistory("bitcoin", "30-12-2018", true)
 	if err != nil {
 		log.Fatal(err)
 	}
