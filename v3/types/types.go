@@ -24,7 +24,7 @@ type CoinsMarket []CoinsMarketItem
 // CoinsID https://api.coingecko.com/api/v3/coins/bitcoin
 type CoinsID struct {
 	coinBaseStruct
-	BlockTimeInMin      int16               `json:"block_time_in_minutes"`
+	BlockTimeInMin      int32               `json:"block_time_in_minutes"`
 	Categories          []string            `json:"categories"`
 	Localization        LocalizationItem    `json:"localization"`
 	Description         DescriptionItem     `json:"description"`
@@ -65,7 +65,13 @@ type CoinsIDHistory struct {
 	PublicInterest *PublicInterestItem `json:"public_interest_stats"`
 }
 
-// CoinsIDMarketChart
+// CoinsIDMarketChart https://api.coingecko.com/api/v3/coins/bitcoin/market_chart?vs_currency=usd&days=1
+type CoinsIDMarketChart struct {
+	coinBaseStruct
+	Prices       *[]ChartItem `json:"prices"`
+	MarketCaps   *[]ChartItem `json:"market_caps"`
+	TotalVolumes *[]ChartItem `json:"total_volumes"`
+}
 
 // CoinsIDStatusUpdates
 

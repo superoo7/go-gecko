@@ -68,6 +68,9 @@ type DescriptionItem map[string]string
 // LinksItem map all links
 type LinksItem map[string]interface{}
 
+// ChartItem
+type ChartItem [2]float32
+
 // MarketDataItem map all market data item
 type MarketDataItem struct {
 	CurrentPrice                           AllCurrencies     `json:"current_price"`
@@ -80,16 +83,16 @@ type MarketDataItem struct {
 	TotalVolume                            AllCurrencies     `json:"total_volume"`
 	High24                                 AllCurrencies     `json:"high_24h"`
 	Low24                                  AllCurrencies     `json:"low_24h"`
-	PriceChange24h                         string            `json:"price_change_24h"`
-	PriceChangePercentage24h               string            `json:"price_change_percentage_24h"`
-	PriceChangePercentage7d                string            `json:"price_change_percentage_7d"`
-	PriceChangePercentage14d               string            `json:"price_change_percentage_14d"`
-	PriceChangePercentage30d               string            `json:"price_change_percentage_30d"`
-	PriceChangePercentage60d               string            `json:"price_change_percentage_60d"`
-	PriceChangePercentage200d              string            `json:"price_change_percentage_200d"`
-	PriceChangePercentage1y                string            `json:"price_change_percentage_1y"`
-	MarketCapChange24h                     string            `json:"market_cap_change_24h"`
-	MarketCapChangePercentage24h           string            `json:"market_cap_change_percentage_24h"`
+	PriceChange24h                         float64           `json:"price_change_24h"`
+	PriceChangePercentage24h               float64           `json:"price_change_percentage_24h"`
+	PriceChangePercentage7d                float64           `json:"price_change_percentage_7d"`
+	PriceChangePercentage14d               float64           `json:"price_change_percentage_14d"`
+	PriceChangePercentage30d               float64           `json:"price_change_percentage_30d"`
+	PriceChangePercentage60d               float64           `json:"price_change_percentage_60d"`
+	PriceChangePercentage200d              float64           `json:"price_change_percentage_200d"`
+	PriceChangePercentage1y                float64           `json:"price_change_percentage_1y"`
+	MarketCapChange24h                     float64           `json:"market_cap_change_24h"`
+	MarketCapChangePercentage24h           float64           `json:"market_cap_change_percentage_24h"`
 	PriceChange24hInCurrency               AllCurrencies     `json:"price_change_24h_in_currency"`
 	PriceChangePercentage1hInCurrency      AllCurrencies     `json:"price_change_percentage_1h_in_currency"`
 	PriceChangePercentage24hInCurrency     AllCurrencies     `json:"price_change_percentage_24h_in_currency"`
@@ -101,8 +104,8 @@ type MarketDataItem struct {
 	PriceChangePercentage1yInCurrency      AllCurrencies     `json:"price_change_percentage_1y_in_currency"`
 	MarketCapChange24hInCurrency           AllCurrencies     `json:"market_cap_change_24h_in_currency"`
 	MarketCapChangePercentage24hInCurrency AllCurrencies     `json:"market_cap_change_percentage_24h_in_currency"`
-	TotalSupply                            *int              `json:"total_supply"`
-	CirculatingSupply                      string            `json:"circulating_supply"`
+	TotalSupply                            *float64          `json:"total_supply"`
+	CirculatingSupply                      float64           `json:"circulating_supply"`
 	Sparkline                              *SparklineItem    `json:"sparkline_7d"`
 	LastUpdated                            string            `json:"last_updated"`
 }
@@ -164,14 +167,14 @@ type TickerItem struct {
 		Identifier       string `json:"identifier"`
 		TradingIncentive bool   `json:"has_trading_incentive"`
 	} `json:"market"`
-	Last            float64           `json:"last"`
-	ConvertedLast   map[string]string `json:"converted_last"`
-	Volume          float64           `json:"volume"`
-	ConvertedVolume map[string]string `json:"converted_volume"`
-	Timestamp       string            `json:"timestamp"`
-	IsAnomaly       bool              `json:"is_anomaly"`
-	IsStale         bool              `json:"is_stale"`
-	CoinID          string            `json:"coin_id"`
+	Last            float64            `json:"last"`
+	ConvertedLast   map[string]float64 `json:"converted_last"`
+	Volume          float64            `json:"volume"`
+	ConvertedVolume map[string]float64 `json:"converted_volume"`
+	Timestamp       string             `json:"timestamp"`
+	IsAnomaly       bool               `json:"is_anomaly"`
+	IsStale         bool               `json:"is_stale"`
+	CoinID          string             `json:"coin_id"`
 }
 
 // StatusUpdateItem for BEAM

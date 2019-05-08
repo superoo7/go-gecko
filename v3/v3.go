@@ -133,6 +133,7 @@ func (c *Client) CoinsList() (*types.CoinList, error) {
 	if err != nil {
 		return nil, err
 	}
+
 	var data *types.CoinList
 	err = json.Unmarshal(resp, &data)
 	if err != nil {
@@ -186,7 +187,8 @@ func (c *Client) CoinsMarket(vsCurrency string, ids []string, order string, perP
 }
 
 // CoinsID /coins/{id}
-func (c *Client) CoinsID(id string, localization bool, tickers bool, marketData bool, communityData bool, developerData bool, sparkline bool) (interface{}, error) {
+func (c *Client) CoinsID(id string, localization bool, tickers bool, marketData bool, communityData bool, developerData bool, sparkline bool) (*types.CoinsID, error) {
+
 	if len(id) == 0 {
 		return nil, fmt.Errorf("id is required")
 	}
@@ -202,6 +204,7 @@ func (c *Client) CoinsID(id string, localization bool, tickers bool, marketData 
 	if err != nil {
 		return nil, err
 	}
+
 	var data *types.CoinsID
 	err = json.Unmarshal(resp, &data)
 	if err != nil {
@@ -254,7 +257,30 @@ func (c *Client) CoinsIDHistory(id string, date string, localization bool) (*typ
 	return data, nil
 }
 
-// CoinsIDMarketChart
+// CoinsIDMarketChart /coins/{id}/market_chart?vs_currency={usd, eur, jpy, etc.}&days={1,14,30,max}
+func CoinsIDMarketChart(id string, vs_currency string, days string) (*types.CoinsIDMarketChart, error) {
+	if len(id) == 0 || len(vs_currency) == 0 || len(days) == 0 {
+		return nil, fmt.Errorf("id, vs_currency, and days is required")
+	}
+
+	params := url.Values{}
+	params.Add("vs_currency", vs_currency)
+	params.Add("days", days)
+
+	url := fmt.Sprintf("%s/coins/%s/market_chart?%s", baseURL, id, params.Encode())
+	resp, err := request.MakeReq(url)
+	if err != nil {
+		return nil, err
+	}
+
+	m := types.CoinsIDMarketChart{}
+	err = json.Unmarshal(resp, &m)
+	if err != nil {
+		return &m, err
+	}
+
+	return &m, nil
+}
 
 // CoinsIDStatusUpdates
 

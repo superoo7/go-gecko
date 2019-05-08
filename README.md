@@ -23,6 +23,7 @@ gopher resources from [free-gophers-pack](https://github.com/MariaLetta/free-gop
 |          /coins/market          |  [/]   |   [/]   |          CoinsMarket           |
 |           /coins/{id}           |  [/]   |         |            CoinsID             |
 |       /coins/{id}/history       |  [/]   |         |         CoinsIDHistory         |
+|    /coins/{id}/market_chart     |  [/]   |         |       CoinsIDMarketChart       |
 |        /events/countries        |  [/]   |         |        EventsCountries         |
 |          /events/types          |  [/]   |         |           EventsType           |
 |         /exchange_rates         |  [/]   |         |          ExchangeRate          |
