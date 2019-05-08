@@ -9,7 +9,8 @@ import (
 )
 
 func main() {
-	global, err := gecko.Global()
+	cg := gecko.NewClient(nil)
+	global, err := cg.Global()
 	if err != nil {
 		log.Fatal(err)
 	}

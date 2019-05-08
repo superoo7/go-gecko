@@ -8,7 +8,8 @@ import (
 )
 
 func main() {
-	currencies, err := gecko.SimpleSupportedVSCurrencies()
+	cg := gecko.NewClient(nil)
+	currencies, err := cg.SimpleSupportedVSCurrencies()
 	if err != nil {
 		log.Fatal(err)
 	}

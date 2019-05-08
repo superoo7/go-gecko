@@ -8,7 +8,8 @@ import (
 )
 
 func main() {
-	rate, err := gecko.ExchangeRates()
+	cg := gecko.NewClient(nil)
+	rate, err := cg.ExchangeRates()
 	if err != nil {
 		log.Fatal(err)
 	}

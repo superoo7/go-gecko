@@ -8,7 +8,8 @@ import (
 )
 
 func main() {
-	t, err := gecko.EventsTypes()
+	cg := gecko.NewClient(nil)
+	t, err := cg.EventsTypes()
 	if err != nil {
 		log.Fatal(err)
 	}

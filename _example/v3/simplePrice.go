@@ -8,9 +8,11 @@ import (
 )
 
 func main() {
+	cg := gecko.NewClient(nil)
+
 	ids := []string{"bitcoin", "ethereum"}
 	vc := []string{"usd", "myr"}
-	sp, err := gecko.SimplePrice(ids, vc)
+	sp, err := cg.SimplePrice(ids, vc)
 	if err != nil {
 		log.Fatal(err)
 	}

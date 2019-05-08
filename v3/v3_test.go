@@ -12,11 +12,12 @@ func init() {
 	defer gock.Off()
 }
 
+var c = NewClient(nil)
 var mockURL = "https://api.coingecko.com/api/v3"
 
 func TestPing(t *testing.T) {
 	err := setupGock("json/ping.json", "/ping")
-	ping, err := Ping()
+	ping, err := c.Ping()
 	if err != nil {
 		t.FailNow()
 	}
@@ -30,7 +31,7 @@ func TestSimpleSinglePrice(t *testing.T) {
 	if err != nil {
 		t.FailNow()
 	}
-	simplePrice, err := SimpleSinglePrice("bitcoin", "usd")
+	simplePrice, err := c.SimpleSinglePrice("bitcoin", "usd")
 	if err != nil {
 		t.FailNow()
 	}
@@ -46,7 +47,7 @@ func TestSimplePrice(t *testing.T) {
 	}
 	ids := []string{"bitcoin", "ethereum"}
 	vc := []string{"usd", "myr"}
-	sp, err := SimplePrice(ids, vc)
+	sp, err := c.SimplePrice(ids, vc)
 	if err != nil {
 		t.FailNow()
 	}
@@ -63,7 +64,7 @@ func TestSimplePrice(t *testing.T) {
 
 func TestSimpleSupportedVSCurrencies(t *testing.T) {
 	err := setupGock("json/simple_supported_vs_currencies.json", "/simple/supported_vs_currencies")
-	s, err := SimpleSupportedVSCurrencies()
+	s, err := c.SimpleSupportedVSCurrencies()
 	if err != nil {
 		t.FailNow()
 	}
@@ -74,7 +75,7 @@ func TestSimpleSupportedVSCurrencies(t *testing.T) {
 
 func TestCoinsList(t *testing.T) {
 	err := setupGock("json/coins_list.json", "/coins/list")
-	list, err := CoinsList()
+	list, err := c.CoinsList()
 	if err != nil {
 		t.FailNow()
 	}

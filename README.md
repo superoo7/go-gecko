@@ -39,6 +39,10 @@ go get -u github.com/superoo7/go-gecko
 
 For usage, checkout [Example folder for v3](/_example/v3)
 
+## Convention
+
+refer to https://medium.com/@marcus.olsson/writing-a-go-client-for-your-restful-api-c193a2f4998c
+
 ## License
 
 MIT
