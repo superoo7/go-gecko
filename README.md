@@ -1,8 +1,8 @@
-# CoinGecko API Client for GoLang
+# CoinGecko API Client for Go
 
 [![Build Status](https://travis-ci.com/superoo7/go-gecko.svg?branch=master)](https://travis-ci.com/superoo7/go-gecko) [![GoDoc](https://godoc.org/github.com/superoo7/go-gecko?status.svg)](https://godoc.org/github.com/superoo7/go-gecko)
 
-Simple API Client for CoinGecko written in Golang
+Simple API Client for CoinGecko written in Go
 
 <p align="center">
     <img src="gogecko.png" alt="gogecko" height="200" />
@@ -38,6 +38,26 @@ go get -u github.com/superoo7/go-gecko
 ```
 
 For usage, checkout [Example folder for v3](/_example/v3)
+
+For production, you might need to set time out for httpClient, here's a sample code:
+
+```go
+package main
+
+import (
+	"net/http"
+	"time"
+
+	coingecko "github.com/superoo7/go-gecko/v3"
+)
+
+func main() {
+	httpClient := &http.Client{
+		Timeout: time.Second * 10,
+	}
+	CG := coingecko.NewClient(httpClient)
+}
+```
 
 ## Convention
 
