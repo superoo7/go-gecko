@@ -211,7 +211,7 @@ type CoinsMarketItem struct {
 	PriceChangePercentage24h            float64        `json:"price_change_percentage_24h"`
 	MarketCapChange24h                  float64        `json:"market_cap_change_24h"`
 	MarketCapChangePercentage24h        float64        `json:"market_cap_change_percentage_24h"`
-	CirculatingSupply                   string         `json:"circulating_supply"`
+	CirculatingSupply                   float64        `json:"circulating_supply"`
 	TotalSupply                         float64        `json:"total_supply"`
 	ATH                                 float64        `json:"ath"`
 	ATHChangePercentage                 float64        `json:"ath_change_percentage"`
