@@ -10,3 +10,4 @@ script:
   - go get -u gopkg.in/h2non/gock.v1
   - go build v3/v3_test.go v3/v3.go
   - go test v3/v3_test.go v3/v3.go
+  - ./script/test_example.sh

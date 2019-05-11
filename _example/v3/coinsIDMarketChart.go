@@ -9,7 +9,8 @@ import (
 )
 
 func main() {
-	m, err := gecko.CoinsIDMarketChart("bitcoin", "usd", "1")
+	cg := gecko.NewClient(nil)
+	m, err := cg.CoinsIDMarketChart("bitcoin", "usd", "1")
 	if err != nil {
 		log.Fatal(err)
 	}
