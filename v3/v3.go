@@ -86,6 +86,9 @@ func (c *Client) SimpleSinglePrice(id string, vsCurrency string) (*types.SimpleS
 		return nil, err
 	}
 	curr := (*t)[id]
+	if len(curr) == 0 {
+		return nil, fmt.Errorf("id or vsCurrency not existed")
+	}
 	data := &types.SimpleSinglePrice{ID: id, Currency: vsCurrency, MarketPrice: curr[vsCurrency]}
 	return data, nil
 }
