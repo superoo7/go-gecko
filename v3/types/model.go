@@ -78,6 +78,9 @@ type MarketDataItem struct {
 	ATH                                    AllCurrencies     `json:"ath"`
 	ATHChangePercentage                    AllCurrencies     `json:"ath_change_percentage"`
 	ATHDate                                map[string]string `json:"ath_date"`
+	ATL                                    AllCurrencies     `json:"atl"`
+	ATLChangePercentage                    AllCurrencies     `json:"atl_change_percentage"`
+	ATLDate                                map[string]string `json:"atl_date"`
 	MarketCap                              AllCurrencies     `json:"market_cap"`
 	MarketCapRank                          uint16            `json:"market_cap_rank"`
 	TotalVolume                            AllCurrencies     `json:"total_volume"`
