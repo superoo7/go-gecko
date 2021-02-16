@@ -2,6 +2,7 @@ package request
 
 import (
 	"fmt"
+	"io"
 	"io/ioutil"
 	"net/http"
 	"strconv"
@@ -12,10 +13,20 @@ import (
 func doReq(req *http.Request) ([]byte, error) {
 	client := &http.Client{}
 	resp, err := client.Do(req)
+	if resp != nil {
+		// workaround for possible net.http memory leak, ref:
+		// http://devs.cloudimmunity.com/gotchas-and-common-mistakes-in-go-golang/index.html#close_http_resp_body
+		defer resp.Body.Close()
+	}
 	if err != nil {
+		if resp != nil {
+			// workaround for possible issue when we want to reuse the
+			// underlying connection, the resp.Body should be read in every
+			// possible path
+			io.Copy(ioutil.Discard, resp.Body)
+		}
 		return nil, err
 	}
-	defer resp.Body.Close()
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return nil, err
