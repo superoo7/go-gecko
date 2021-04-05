@@ -260,3 +260,22 @@ type Global struct {
 	MarketCapPercentage             AllCurrencies `json:"market_cap_percentage"`
 	UpdatedAt                       int64         `json:"updated_at"`
 }
+
+type ExchangeBase struct {
+	ID   string `json:"id"`
+	Name string `json:"name"`
+}
+
+type ExchangeDetail struct {
+	ExchangeBase
+	YearEstablished             int64   `json:"year_established,omitempty"`
+	Country                     string  `json:"country,omitempty"`
+	Description                 string  `json:"description,omitempty"`
+	Url                         string  `json:"url,omitempty"`
+	Image                       string  `json:"string,omitempty"`
+	HasTradingIncentive         bool    `json:"has_trading_incentive,omitempty"`
+	TrustScore                  int     `json:"trust_score,omitempty"`
+	TrustScoreRank              int     `json:"trust_score_rank,omitempty"`
+	TradeVolume24hBtc           float64 `json:"trade_volume_24h_btc,omitempty"`
+	TradeVolume24hBtcNormalized float64 `json:"trade_volume_24h_btc_normalized,omitempty"`
+}
