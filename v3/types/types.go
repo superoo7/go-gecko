@@ -125,3 +125,9 @@ type ExchangesBase []ExchangeBase
 
 // curl -X GET "https://api.coingecko.com/api/v3/exchanges
 type ExchangesDetail []ExchangeDetail
+
+// ExchangeIDTickers https://api.coingecko.com/api/v3/exchanges/{id}/tickers
+type ExchangeIDTickers struct {
+	Name    string       `json:"name"`
+	Tickers []TickerItem `json:"tickers"`
+}
