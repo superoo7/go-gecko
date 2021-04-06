@@ -399,7 +399,7 @@ func (c *Client) ExchangesList() (*types.ExchangesBase, error) {
 	return data, nil
 }
 
-// Get exchange tickers (paginated)
+// Get exchange tickers ( paginated )
 func (c *Client) ExchangeIDTickers(exchangeID string, coinIDs []string) (*types.ExchangeIDTickers, error) {
 	params := url.Values{}
 	coindIDsParam := strings.Join(coinIDs[:], ",")
