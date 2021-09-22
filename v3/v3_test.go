@@ -12,7 +12,7 @@ func init() {
 	defer gock.Off()
 }
 
-var c = NewClient(nil)
+var c = NewClient(nil, nil)
 var mockURL = "https://api.coingecko.com/api/v3"
 
 func TestPing(t *testing.T) {

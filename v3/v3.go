@@ -8,8 +8,8 @@ import (
 	"net/url"
 	"strings"
 
-	"github.com/superoo7/go-gecko/format"
-	"github.com/superoo7/go-gecko/v3/types"
+	"github.com/shortcircuit3/go-gecko/format"
+	"github.com/shortcircuit3/go-gecko/v3/types"
 )
 
 var baseURL = "https://api.coingecko.com/api/v3"
@@ -17,14 +17,15 @@ var baseURL = "https://api.coingecko.com/api/v3"
 // Client struct
 type Client struct {
 	httpClient *http.Client
+	apiKey     *string
 }
 
 // NewClient create new client object
-func NewClient(httpClient *http.Client) *Client {
+func NewClient(httpClient *http.Client, apiKey *string) *Client {
 	if httpClient == nil {
 		httpClient = http.DefaultClient
 	}
-	return &Client{httpClient: httpClient}
+	return &Client{httpClient: httpClient, apiKey: apiKey}
 }
 
 // helper
@@ -52,6 +53,13 @@ func (c *Client) MakeReq(url string) ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
+
+	if c.apiKey != nil {
+		req.Header = http.Header{
+			"X-Cg-Pro-Api-Key": []string{*c.apiKey},
+		}
+	}
+
 	resp, err := doReq(req, c.httpClient)
 	if err != nil {
 		return nil, err
