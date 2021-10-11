@@ -13,7 +13,7 @@ import (
 )
 
 var baseURL = "https://api.coingecko.com/api/v3"
-var proURL = " https://pro-api.coingecko.com/api/v3"
+var proURL = "https://pro-api.coingecko.com/api/v3"
 
 // Client struct
 type Client struct {
