@@ -132,6 +132,22 @@ func (c *Client) SimpleSupportedVSCurrencies() (*types.SimpleSupportedVSCurrenci
 	return data, nil
 }
 
+// CoinsTop50 /coinss
+func (c *Client) CoinsTop50() (*types.CoinList, error)  {
+	url := fmt.Sprintf("%s/coins", baseURL)
+	resp, err := c.MakeReq(url)
+	if err != nil {
+		return nil, err
+	}
+
+	var data *types.CoinList
+	err = json.Unmarshal(resp, &data)
+	if err != nil {
+		return nil, err
+	}
+	return data, nil
+}
+
 // CoinsList /coins/list
 func (c *Client) CoinsList() (*types.CoinList, error) {
 	url := fmt.Sprintf("%s/coins/list", baseURL)
