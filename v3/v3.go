@@ -6,6 +6,7 @@ import (
 	"io/ioutil"
 	"net/http"
 	"net/url"
+	"strconv"
 	"strings"
 
 	"github.com/superoo7/go-gecko/format"
@@ -17,6 +18,22 @@ var baseURL = "https://api.coingecko.com/api/v3"
 // Client struct
 type Client struct {
 	httpClient *http.Client
+}
+
+// TokenPriceOpts not required options for /simple/token_price request
+type TokenPriceOpts struct {
+	IncludeMarketCap     bool
+	Include24HoursVol    bool
+	Include24HoursChange bool
+	IncludeLastUpdatedAt bool
+}
+
+type TokenPrice struct {
+	USD           float64 `json: "usd"`
+	USDMarketCap  float64 `json: "usd_market_cap"`
+	USD24hVol     float64 `json: "usd_24h_vol"`
+	USD24hChange  float64 `json: "usd_24h_change"`
+	LastUpdatedAt int64   `json: "last_updated_at"`
 }
 
 // NewClient create new client object
@@ -115,6 +132,42 @@ func (c *Client) SimplePrice(ids []string, vsCurrencies []string) (*map[string]m
 	}
 
 	return &t, nil
+}
+
+// SimplePrice /simple/price Multiple ID and Currency (ids, vs_currencies)
+func (c *Client) SimpleTokenPrice(
+	platformID string,
+	tokenAddresses []string,
+	currencies []string,
+	opts *TokenPriceOpts,
+) (map[string]TokenPrice, error) {
+	params := url.Values{}
+	addresssesParam := strings.Join(tokenAddresses[:], ",")
+	currenciesParam := strings.Join(currencies[:], ",")
+
+	params.Add("contract_addresses", addresssesParam)
+	params.Add("vs_currencies", currenciesParam)
+
+	if opts != nil {
+		params.Add("include_market_cap", strconv.FormatBool(opts.IncludeMarketCap))
+		params.Add("include_24hr_vol", strconv.FormatBool(opts.Include24HoursVol))
+		params.Add("include_24hr_change", strconv.FormatBool(opts.Include24HoursChange))
+		params.Add("include_last_updated_at", strconv.FormatBool(opts.IncludeLastUpdatedAt))
+	}
+
+	url := fmt.Sprintf("%s/simple/token_price/%s?%s", baseURL, platformID, params.Encode())
+	resp, err := c.MakeReq(url)
+	if err != nil {
+		return nil, err
+	}
+
+	tokens := make(map[string]TokenPrice)
+	err = json.Unmarshal(resp, &tokens)
+	if err != nil {
+		return nil, err
+	}
+
+	return tokens, nil
 }
 
 // SimpleSupportedVSCurrencies /simple/supported_vs_currencies
