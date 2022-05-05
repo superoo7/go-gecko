@@ -1,7 +1,9 @@
 package coingecko
 
 import (
+	"fmt"
 	"io/ioutil"
+	"log"
 	"os"
 	"testing"
 
@@ -83,6 +85,96 @@ func TestCoinsList(t *testing.T) {
 	if item.ID != "01coin" {
 		t.FailNow()
 	}
+}
+
+func TestCoinsIDOHLC(t *testing.T) {
+	const invalidDaysErr = "invalid days value"
+	// tests were ran at 3:00 PM PST
+	// Actual response length may vary slightly by time of day / availability of current day's data sets
+	var tests = []struct {
+		Id                 string
+		Currency           string
+		Days               string
+		wantErr            error
+		WantResponseLength int
+	}{
+		{
+			Id:                 "bitcoin",
+			Currency:           "usd",
+			Days:               "1",
+			wantErr:            nil,
+			WantResponseLength: 48, // 1d = 24 * 0.5
+		},
+		{
+			Id:                 "ethereum",
+			Currency:           "usd",
+			Days:               "7",
+			wantErr:            nil,
+			WantResponseLength: 43, // 7d = (24 / 4) * 7 + 1
+		},
+		{
+			Id:                 "ethereum",
+			Currency:           "usd",
+			Days:               "14",
+			wantErr:            nil,
+			WantResponseLength: 85, // 14d = (24 / 4) * 14 + 1
+		},
+		{
+			Id:                 "bitcoin",
+			Currency:           "usd",
+			Days:               "30",
+			wantErr:            nil,
+			WantResponseLength: 181, // 30d = (24 / 4) * 30 + 1
+		},
+		{
+			Id:                 "bitcoin",
+			Currency:           "usd",
+			Days:               "90",
+			wantErr:            nil,
+			WantResponseLength: 24, // 90d = (90 / 4) + 2
+		},
+		{
+			Id:                 "bitcoin",
+			Currency:           "usd",
+			Days:               "180",
+			wantErr:            nil,
+			WantResponseLength: 48, // 180d = ((90 / 4) + 2) * 2
+		},
+		{
+			Id:                 "bitcoin",
+			Currency:           "usd",
+			Days:               "365",
+			wantErr:            nil,
+			WantResponseLength: 96, // 365d = ((90 / 4) + 2) * 4
+		},
+		{
+			Id:                 "bitcoin",
+			Currency:           "usd",
+			Days:               "2",
+			wantErr:            fmt.Errorf(invalidDaysErr),
+			WantResponseLength: 1, // 365d = ((90 / 4) + 2) * 4
+		},
+	}
+	c := NewClient(nil)
+
+	for _, test := range tests {
+		chart, err := c.CoinsIDOHLC(test.Id, test.Currency, test.Days)
+		if err != nil {
+			if test.wantErr == nil {
+				t.Errorf("FAIL - ERROR: %v; WANT: nil", err)
+			}
+			if err.Error() != test.wantErr.Error() {
+				t.Errorf("FAIL - ERROR: %v; WANT: %v", err, test.wantErr)
+			}
+			continue // no chart to check length against
+		}
+
+		if len(*chart) != test.WantResponseLength {
+			t.Errorf("Invalid response length: %d; WANT: %d", len(*chart), test.WantResponseLength)
+		}
+		log.Printf("CHART:\n %v", *chart)
+	}
+
 }
 
 // Util: Setup Gock

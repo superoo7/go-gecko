@@ -8,8 +8,8 @@ import (
 	"net/url"
 	"strings"
 
-	"github.com/superoo7/go-gecko/format"
-	"github.com/superoo7/go-gecko/v3/types"
+	"github.com/ggarcia14/go-gecko/format"
+	"github.com/ggarcia14/go-gecko/v3/types"
 )
 
 var baseURL = "https://api.coingecko.com/api/v3"
@@ -286,6 +286,54 @@ func (c *Client) CoinsIDMarketChart(id string, vs_currency string, days string) 
 	}
 
 	return &m, nil
+}
+
+// CoinsIDOHLC /coins/{id}/ohlc?vs_currency={usd, eur, jpy, etc.}&days={1,7,14,30,90,180,365}
+func (c *Client) CoinsIDOHLC(id string, vs_currency string, days string) (*types.CoinsIDOhlcChart, error) {
+	if len(id) == 0 || len(vs_currency) == 0 || len(days) == 0 {
+		return nil, fmt.Errorf("id, vs_currency, and days is required")
+	}
+	if !isValidOhlcDayPeriod(days) {
+		return nil, fmt.Errorf("invalid days value")
+	}
+
+	params := url.Values{}
+	params.Add("vs_currency", vs_currency)
+	params.Add("days", days)
+
+	url := fmt.Sprintf("%s/coins/%s/ohlc?%s", baseURL, id, params.Encode())
+	resp, err := c.MakeReq(url)
+	if err != nil {
+		return nil, err
+	}
+
+	m := types.CoinsIDOhlcChart{}
+	err = json.Unmarshal(resp, &m)
+	if err != nil {
+		return &m, err
+	}
+
+	return &m, nil
+}
+
+// check 'days' value for /coins/{id}/ohlc endpoint query param is a valid value
+// API returns error response otherwise
+func isValidOhlcDayPeriod(days string) bool {
+	valid := map[string]bool{
+		"1":   true,
+		"7":   true,
+		"14":  true,
+		"30":  true,
+		"90":  true,
+		"180": true,
+		"365": true,
+	}
+
+	if valid[days] {
+		return true
+	}
+
+	return false
 }
 
 // CoinsIDStatusUpdates
