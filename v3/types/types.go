@@ -73,6 +73,18 @@ type CoinsIDMarketChart struct {
 	TotalVolumes *[]ChartItem `json:"total_volumes"`
 }
 
+// CoinsIDOhlcChart contains the response model returned from the /coins/{id}/ohlc endpoint.
+// The response is a 2 dimensional array of variable length, with a fixed length (5) inner
+// array. The inner array contains the datapoints corresponding to the schema below:
+// [
+// 	1594382400000 (time),
+// 	1.1 (open),
+// 	2.2 (high),
+// 	3.3 (low),
+// 	4.4 (close)
+// ]
+type CoinsIDOhlcChart []CoinsIDOHLCItem
+
 // CoinsIDStatusUpdates
 
 // CoinsIDContractAddress https://api.coingecko.com/api/v3/coins/{id}/contract/{contract_address}

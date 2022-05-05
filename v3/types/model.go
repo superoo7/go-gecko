@@ -231,6 +231,19 @@ type CoinsMarketItem struct {
 	PriceChangePercentage1yInCurrency   *float64       `json:"price_change_percentage_1y_in_currency"`
 }
 
+// CoinsIDOHLCItem contains the inner array contained in the response model returned
+// from the /coins/{id}/ohlc endpoint. The response is a 2 dimensional array of variable length,
+// with a fixed length (5) inner array. The inner array contains the datapoints corresponding
+// to the schema below:
+// [
+// 	1594382400000 (time),
+// 	1.1 (open),
+// 	2.2 (high),
+// 	3.3 (low),
+// 	4.4 (close)
+// ]
+type CoinsIDOHLCItem [5]float64
+
 // EventCountryItem item in EventsCountries
 type EventCountryItem struct {
 	Country string `json:"country"`
