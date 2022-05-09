@@ -90,7 +90,8 @@ func TestCoinsList(t *testing.T) {
 func TestCoinsIDOHLC(t *testing.T) {
 	const invalidDaysErr = "invalid days value"
 	// tests were ran at 3:00 PM PST
-	// Actual response length may vary slightly by time of day / availability of current day's data sets
+	// Actual response length may vary slightly by time of day / availability
+	// of current day's data sets ( +/- )
 	var tests = []struct {
 		Id                 string
 		Currency           string
@@ -169,12 +170,120 @@ func TestCoinsIDOHLC(t *testing.T) {
 			continue // no chart to check length against
 		}
 
-		if len(*chart) != test.WantResponseLength {
+		spread := 3
+		if !checkLength(len(*chart), test.WantResponseLength, spread) {
 			t.Errorf("Invalid response length: %d; WANT: %d", len(*chart), test.WantResponseLength)
 		}
 		log.Printf("CHART:\n %v", *chart)
 	}
 
+}
+
+func TestCoinsIDMarketChart(t *testing.T) {
+	// tests were ran at 3:00 PM PST
+	// Actual response length may vary slightly by time of day / availability of current day's data sets
+	var tests = []struct {
+		Id                 string
+		Currency           string
+		Days               string
+		Daily              bool
+		wantErr            error
+		WantResponseLength int
+	}{
+		{
+			Id:                 "bitcoin",
+			Currency:           "usd",
+			Days:               "1",
+			Daily:              false,
+			wantErr:            nil,
+			WantResponseLength: 288, // 5m intervals -- 1d = 1 * 24 * (60 / 5)
+		},
+		{
+			Id:                 "ethereum",
+			Currency:           "usd",
+			Days:               "7",
+			Daily:              false,
+			wantErr:            nil,
+			WantResponseLength: 168, // 1h intervals -- 7d = 7 * 24
+		},
+		{
+			Id:                 "ethereum",
+			Currency:           "usd",
+			Days:               "7",
+			Daily:              true,
+			wantErr:            nil,
+			WantResponseLength: 7, // 1d intervals -- 7d = 7 * 1
+		},
+		{
+			Id:                 "bitcoin",
+			Currency:           "usd",
+			Days:               "90",
+			Daily:              false,
+			wantErr:            nil,
+			WantResponseLength: 2160, // 1h intervals -- 90d = 90 * 24
+		},
+		{
+			Id:                 "bitcoin",
+			Currency:           "usd",
+			Days:               "91",
+			Daily:              false,
+			wantErr:            nil,
+			WantResponseLength: 91, // 1d intervals -- 91d = 91 * 1
+		},
+		{
+			Id:                 "bitcoin",
+			Currency:           "usd",
+			Days:               "180",
+			Daily:              true,
+			wantErr:            nil,
+			WantResponseLength: 180, // 1d intervals -- 180d = 180 * 1
+		},
+		{
+			Id:                 "bitcoin",
+			Currency:           "usd",
+			Days:               "365",
+			Daily:              false,
+			wantErr:            nil,
+			WantResponseLength: 365, // 1d intervals -- 365d = 365 * 1
+		},
+		{
+			Id:                 "bitcoin",
+			Currency:           "usd",
+			Days:               "2",
+			Daily:              true,
+			wantErr:            nil,
+			WantResponseLength: 2, // 1d intervals -- 2d = 2 * 1
+		},
+	}
+	c := NewClient(nil)
+
+	for _, test := range tests {
+		chart, err := c.CoinsIDMarketChart(test.Id, test.Currency, test.Days, test.Daily)
+		if err != nil {
+			if test.wantErr == nil {
+				t.Errorf("FAIL - ERROR: %v; WANT: nil", err)
+			}
+			if err.Error() != test.wantErr.Error() {
+				t.Errorf("FAIL - ERROR: %v; WANT: %v", err, test.wantErr)
+			}
+			continue // no chart to check length against
+		}
+
+		spread := 3
+		if !checkLength(len(*chart.MarketCaps), test.WantResponseLength, spread) {
+			t.Errorf("Invalid response length: %d; WANT: %d", len(*chart.MarketCaps), test.WantResponseLength)
+		}
+
+	}
+
+}
+
+// check variable response size vs expected response size with +/- spread
+func checkLength(l, w, spread int) bool {
+	if l > (w+spread) || l < (w-spread) {
+		return false
+	}
+	return true
 }
 
 // Util: Setup Gock

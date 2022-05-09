@@ -69,7 +69,7 @@ type DescriptionItem map[string]string
 type LinksItem map[string]interface{}
 
 // ChartItem
-type ChartItem [2]float32
+type ChartItem [2]float64
 
 // MarketDataItem map all market data item
 type MarketDataItem struct {

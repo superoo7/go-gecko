@@ -264,17 +264,20 @@ func (c *Client) CoinsIDHistory(id string, date string, localization bool) (*typ
 }
 
 // CoinsIDMarketChart /coins/{id}/market_chart?vs_currency={usd, eur, jpy, etc.}&days={1,14,30,max}
-func (c *Client) CoinsIDMarketChart(id string, vs_currency string, days string) (*types.CoinsIDMarketChart, error) {
-	if len(id) == 0 || len(vs_currency) == 0 || len(days) == 0 {
+func (c *Client) CoinsIDMarketChart(id string, vsCurrency string, days string, daily bool) (*types.CoinsIDMarketChart, error) {
+	if len(id) == 0 || len(vsCurrency) == 0 || len(days) == 0 {
 		return nil, fmt.Errorf("id, vs_currency, and days is required")
 	}
 
 	params := url.Values{}
-	params.Add("vs_currency", vs_currency)
+	params.Add("vs_currency", vsCurrency)
 	params.Add("days", days)
+	if daily {
+		params.Add("interval", "daily")
+	}
 
-	url := fmt.Sprintf("%s/coins/%s/market_chart?%s", baseURL, id, params.Encode())
-	resp, err := c.MakeReq(url)
+	endpoint := fmt.Sprintf("%s/coins/%s/market_chart?%s", baseURL, id, params.Encode())
+	resp, err := c.MakeReq(endpoint)
 	if err != nil {
 		return nil, err
 	}
@@ -289,8 +292,8 @@ func (c *Client) CoinsIDMarketChart(id string, vs_currency string, days string) 
 }
 
 // CoinsIDOHLC /coins/{id}/ohlc?vs_currency={usd, eur, jpy, etc.}&days={1,7,14,30,90,180,365}
-func (c *Client) CoinsIDOHLC(id string, vs_currency string, days string) (*types.CoinsIDOhlcChart, error) {
-	if len(id) == 0 || len(vs_currency) == 0 || len(days) == 0 {
+func (c *Client) CoinsIDOHLC(id string, vsCurrency string, days string) (*types.CoinsIDOhlcChart, error) {
+	if len(id) == 0 || len(vsCurrency) == 0 || len(days) == 0 {
 		return nil, fmt.Errorf("id, vs_currency, and days is required")
 	}
 	if !isValidOhlcDayPeriod(days) {
@@ -298,11 +301,11 @@ func (c *Client) CoinsIDOHLC(id string, vs_currency string, days string) (*types
 	}
 
 	params := url.Values{}
-	params.Add("vs_currency", vs_currency)
+	params.Add("vs_currency", vsCurrency)
 	params.Add("days", days)
 
-	url := fmt.Sprintf("%s/coins/%s/ohlc?%s", baseURL, id, params.Encode())
-	resp, err := c.MakeReq(url)
+	endpoint := fmt.Sprintf("%s/coins/%s/ohlc?%s", baseURL, id, params.Encode())
+	resp, err := c.MakeReq(endpoint)
 	if err != nil {
 		return nil, err
 	}
