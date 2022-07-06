@@ -1,6 +1,6 @@
 # CoinGecko API Client for Go
 
-[![Build Status](https://travis-ci.com/superoo7/go-gecko.svg?branch=master)](https://travis-ci.com/superoo7/go-gecko) [![GoDoc](https://godoc.org/github.com/superoo7/go-gecko?status.svg)](https://godoc.org/github.com/superoo7/go-gecko)
+[![Build Status](https://travis-ci.com/relative-finance/go-gecko.svg?branch=master)](https://travis-ci.com/relative-finance/go-gecko) [![GoDoc](https://godoc.org/github.com/relative-finance/go-gecko?status.svg)](https://godoc.org/github.com/relative-finance/go-gecko)
 
 Simple API Client for CoinGecko written in Go
 
@@ -34,7 +34,7 @@ gopher resources from [free-gophers-pack](https://github.com/MariaLetta/free-gop
 Installation with go get.
 
 ```
-go get -u github.com/superoo7/go-gecko
+go get -u github.com/relative-finance/go-gecko
 ```
 
 For usage, checkout [Example folder for v3](/_example/v3)
@@ -48,7 +48,7 @@ import (
 	"net/http"
 	"time"
 
-	coingecko "github.com/superoo7/go-gecko/v3"
+	coingecko "github.com/relative-finance/go-gecko/v3"
 )
 
 func main() {
