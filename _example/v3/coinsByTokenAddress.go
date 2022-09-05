@@ -2,8 +2,8 @@ package main
 
 import (
 	"fmt"
-	gecko "github.com/superoo7/go-gecko/v3"
-	"github.com/superoo7/go-gecko/v3/types"
+	gecko "github.com/tomastoth/go-gecko/v3"
+	"github.com/tomastoth/go-gecko/v3/types"
 	"log"
 )
 
