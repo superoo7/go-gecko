@@ -132,6 +132,27 @@ func (c *Client) SimpleSupportedVSCurrencies() (*types.SimpleSupportedVSCurrenci
 	return data, nil
 }
 
+func (c *Client) SimplePriceByAddress(addresses []string, vsCurrencies []string, assetPlatform types.AssetPlatform) (*map[string]map[string]float32, error) {
+	params := url.Values{}
+	addressesParam := strings.Join(addresses[:], ",")
+	vsCurrenciesParam := strings.Join(vsCurrencies[:], ",")
+	params.Add("id", assetPlatform.String())
+	params.Add("contract_addresses", addressesParam)
+	params.Add("vs_currencies", vsCurrenciesParam)
+	url := fmt.Sprintf("%s/simple/token_price/%s?%s", baseURL, assetPlatform.String(), params.Encode())
+	resp, err := c.MakeReq(url)
+	if err != nil {
+		return nil, err
+	}
+	t := make(map[string]map[string]float32)
+	err = json.Unmarshal(resp, &t)
+	if err != nil {
+		return nil, err
+	}
+	return &t, nil
+
+}
+
 // CoinsList /coins/list
 func (c *Client) CoinsList() (*types.CoinList, error) {
 	url := fmt.Sprintf("%s/coins/list", baseURL)
